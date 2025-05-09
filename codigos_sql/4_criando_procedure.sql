@@ -1,7 +1,8 @@
+-- ========================================================
+-- PROCEDURE INSERE CLIENTE
 USE master;
 GO
--- PROCEDURE INSERE CLIENTE
--- ========================================================
+
 IF OBJECT_ID('dbo.insere_cliente') IS NOT NULL
     DROP PROCEDURE dbo.insere_cliente;
 GO
@@ -24,6 +25,7 @@ BEGIN
 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
+
 		IF NOT EXISTS (SELECT CPF FROM LIVRARIADB.dbo.CLIENTE WHERE CPF = @cpf)
 		BEGIN
 			INSERT INTO LIVRARIADB.dbo.CLIENTE (NOME_CLIENTE, CPF, TELEFONE, EMAIL)
@@ -36,10 +38,56 @@ BEGIN
 	SET NOCOUNT OFF;
 END;
 -- ========================================================
+-- PROCEDURE INSERE CLIENTE ENDERECO DO CLIENTE
+USE master;
+GO
+
+IF OBJECT_ID('dbo.insere_endereco_cliente') IS NOT NULL
+	DROP PROCEDURE dbo.insere_endereco_cliente
+GO
+
+CREATE PROCEDURE dbo.insere_endereco_cliente
+AS
+BEGIN
+	SET NOCOUNT ON;
+	DECLARE db_cursor CURSOR FOR
+		SELECT NUMERO_ENDERECO, TIPO_ENDERECO, CEP, COMPLEMENTO
+		FROM STAGE.dbo.MOVIMENTACAO_LIVROS
+
+	DECLARE @numero_endereco	INT;
+	DECLARE @tipo_endereco		INT;
+	DECLARE @cep				VARCHAR(20);
+	DECLARE @complemento		VARCHAR(100);
+
+
+	OPEN db_cursor;
+	FETCH NEXT FROM db_cursor INTO @numero_endereco, @tipo_endereco, @cep, @complemento;
+
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+
+		IF @complemento IS NULL
+			SET @complemento = 'não informado';
+
+		IF NOT EXISTS (SELECT CEP FROM LIVRARIADB.dbo.ENDERECOS_CLIENTES WHERE CEP = @cep)
+		BEGIN
+			INSERT INTO LIVRARIADB.dbo.ENDERECOS_CLIENTES (NUMERO, TIPO_ENDERECO, CEP, COMPLEMENTO)
+			VALUES (@numero_endereco, @tipo_endereco, @cep, @complemento)
+		END
+		FETCH NEXT FROM	db_cursor INTO @numero_endereco, @tipo_endereco, @cep, @complemento;
+	END
+	CLOSE db_cursor;
+	DEALLOCATE db_cursor;
+	SET NOCOUNT OFF;
+END;
+-- ========================================================
+-- PROCEDURE INSERE NOTA FISCAL
 
 
 
 
+
+------------------------------------------------------------------------------------
 /*
 # CRIANDO PROCEDURE
 
@@ -59,12 +107,13 @@ END;
 /*
 TABELAS A SEREM INSERIDOS OS VALORES
 
-# ENDERECOS_CLIENTES
+# ENDERECOS_CLIENTES [OK]
 	-> MOVIMENTACAO_LIVROS.NUMERO_ENDERECO = ENDERECOS_CLIENTES.NUMERO		~verificar valores nulos
 	-> MOVIMENTACAO_LIVROS.TIPO_ENDERECO = ENDERECOS_CLIENTES.TIPO_ENDERECO ~verificar valores nulos
-# CEP
 	-> MOVIMENTACAO_LIVROS.CEP = ENDERECOS_CLIENTES.CEP
+	-> MOVIMENTACAO_LIVROS.COMPLEMENTO = ENDERECOS_CLIENTES.COMPLEMENTO
 
+-------------------------------------------------------------------------------------------------
 # NOTA_FISCAL
 	-> MOVIMENTACAO_LIVROS.NUMERO_NOTA_FISCAL = NOTA_FISCAL.NUMERO_NOTA_FISCAL ~verificar valores nulos
 	-> MOVIMENTACAO_LIVROS.DATA_VENDA = NOTA_FISCAL.DATA_NOTA ~verificar valores nulos
