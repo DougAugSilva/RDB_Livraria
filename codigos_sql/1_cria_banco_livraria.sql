@@ -148,7 +148,7 @@ GO
 -- ####################################################################### parte nova Eder
 CREATE TABLE ENDERECOS_CLIENTES (
     ID_ENDERECO_CLIENTE                 INT             IDENTITY (1,1),
-    ID_CLIENTE                          INT             NOT NULL,
+    ID_CLIENTE                          INT             NULL, -- Inserir Id do cliente no csv
     TIPO_ENDERECO                       INT             NOT NULL,
     CEP                                 VARCHAR(20)     NOT NULL,
     NUMERO                              INT             NOT NULL,
