@@ -1,0 +1,11 @@
+MINIMO_DIA,MAXIMO_DIA,PERCENT_MIN,PERCENT_MAX,DESC_DESCONTO,DATA_APROVACAO,APROVADOR,TIPO,ESTATUS
+2025-01-01,2025-01-31,5.00,10.00,Desconto de Verão,2025-01-15,João Silva,Promocional,Aprovado
+2025-02-01,2025-02-28,3.00,8.00,Desconto de Carnaval,2025-02-10,Maria Oliveira,Promocional,Aprovado
+2025-03-01,2025-03-31,4.50,9.00,Desconto de Páscoa,2025-03-20,Carlos Souza,Promocional,Aprovado
+2025-04-01,2025-04-30,2.00,7.00,Desconto de Outono,2025-04-15,Ana Lima,Promocional,Aprovado
+2025-05-01,2025-05-31,3.50,8.50,Desconto de Mãe,2025-05-10,Pedro Santos,Promocional,Aprovado
+2025-06-01,2025-06-30,4.00,9.50,Desconto de Namorados,2025-06-15,Luciana Costa,Promocional,Aprovado
+2025-07-01,2025-07-31,5.00,10.00,Desconto de Inverno,2025-07-20,Marcos Pereira,Promocional,Aprovado
+2025-08-01,2025-08-31,2.50,7.50,Desconto de Pais,2025-08-10,Juliana Rocha,Promocional,Aprovado
+2025-09-01,2025-09-30,3.00,8.00,Desconto da Primavera,2025-09-15,Fernando Almeida,Promocional,Aprovado
+2025-10-01,2025-10-31,4.50,9.50,Desconto de Crianças,2025-10-20,Patrícia Mendes,Promocional,Aprovado

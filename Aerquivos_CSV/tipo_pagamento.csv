@@ -1,0 +1,11 @@
+TIPO,DESCRICAO
+DINHEIRO,Pagamento em espécie
+CARTAO_CREDITO,Cartão de Crédito
+CARTAO_DEBITO,Cartão de Débito
+PIX,Transferência via PIX
+BOLETO,Boleto Bancário
+TRANSFERENCIA,Transferência Bancária
+CHEQUE,Pagamento com Cheque
+VALE_ALIMENTACAO,Vale Alimentação
+VALE_REFEICAO,Vale Refeição
+OUTROS,Outros tipos de pagamento
