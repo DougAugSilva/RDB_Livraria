@@ -2,7 +2,7 @@
 Banco de dados relacional (RDB) de uma livraria em SQL Server
 
 ![Modelo_Conceitual](https://github.com/DougAugSilva/RDB_Livraria/blob/main/modelo_conceitual/RDB_Livrariamodelo_conceitual%20Diagrama%20Biblioteca%20RDB%20(modelo%203).png)
-
+> Banco de dados *LIVRARIADB*
 ## Passos do Projeto
 1. Criação dos modelos para o banco de dados *LIVRARIADB*.  
    - Modelo Teórico
