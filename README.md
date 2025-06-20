@@ -1,7 +1,7 @@
 # RDB Livraria
 Banco de dados relacional (RDB) de uma livraria que permite a venda e o aluguel de livros
 
-![Modelo_Conceitual](https://github.com/DougAugSilva/RDB_BIBLIOTECA/blob/main/modelo_conceitual/Diagrama%20Biblioteca%20RDB.png)
+![Modelo_Conceitual](https://github.com/DougAugSilva/RDB_Livraria/blob/main/modelo_conceitual/RDB_Livrariamodelo_conceitual%20Diagrama%20Biblioteca%20RDB%20(modelo%203).png)
 
 ## Passos do Projeto
 1. Criação dos modelos para o banco de dados *LIVRARIADB*.  
