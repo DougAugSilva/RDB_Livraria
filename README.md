@@ -9,13 +9,13 @@ Banco de dados relacional (RDB) de uma livraria em SQL Server
 Este projeto tem como objetivo desenvolver um banco de dados relacional (RDB) para uma biblioteca fictícia, utilizada como caso de estudos, em SQL Server. A criação do banco de dados foi feita desde o zero, sendo planejado os modelos teóricos, físicos e lógicos e  etc, conforme a seção *Passos do Projeto*. <br>
 O banco de dados foi pensado para receber um arquivo .csv contendo informações sobre a venda de um ou mais livros, sendo necessário primeiro a passagem por banco **STAGE**, onde será realizado um tratamento inicial dos dados e preenchimento de tabelas essenciais por meio de Stored procedures, realizando assim um processo de ETL para com os dados na inserção destes no banco **LIVRARIADB**.
 
-## Habilidades Desenvolvidas e Tecnonolias Empregadas
+## Habilidades Desenvolvidas e Tecnologias Empregadas
 - Planejamento de banco de dados
 - SQL Server
 - SQL Manegament Studio
-- Criação de Stored proceadures
+- Criação de stored proceadures
 - Tratamento e validação de dados
-- Processo de ETL (extract transform load)
+- Processo de ETL (extract, transform, load)
 
 ## Passos do Projeto
 1. Criação dos modelos para o banco de dados *LIVRARIADB*.  
