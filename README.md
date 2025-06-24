@@ -10,7 +10,7 @@ Este projeto tem como objetivo desenvolver um banco de dados relacional (RDB) pa
 O banco de dados foi pensado para receber um arquivo .csv contendo informações sobre a venda de um ou mais livros, sendo necessário primeiro a passagem por banco **STAGE**, onde será realizado um tratamento inicial dos dados e preenchimento de tabelas essenciais por meio de Stored procedures, realizando assim um processo de ETL para com os dados na inserção destes no banco **LIVRARIADB**.
 
 ## Habilidades Desenvolvidas e Tecnonolias Empregadas
-- Planejamento de banco de Dados
+- Planejamento de banco de dados
 - SQL Server
 - SQL Manegament Studio
 - Criação de Stored proceadures
