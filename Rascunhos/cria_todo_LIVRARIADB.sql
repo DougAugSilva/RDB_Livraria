@@ -149,12 +149,13 @@ CREATE TABLE HISTORICO_RECEBIMENTO(
 GO
 
 CREATE TABLE CEP (
-    CEP                 NVARCHAR(15)     NOT NULL,
+    ID_CEP              INT             IDENTITY (1,1),
+    CEP                 VARCHAR(15)     NOT NULL,
     UF                  VARCHAR(5)      NOT NULL,
     CIDADE              VARCHAR(150)    NOT NULL,
     BAIRRO              VARCHAR(150)    NOT NULL,
     LOGRADOURO          VARCHAR(150)    NOT NULL,
-    CONSTRAINT PK_CEP   PRIMARY KEY (CEP)
+    CONSTRAINT PK_CEP   PRIMARY KEY (ID_CEP)
 );
 GO
 
@@ -168,14 +169,14 @@ GO
 
 CREATE TABLE ENDERECOS_CLIENTES (
     ID_ENDERECO_CLIENTE                 INT             IDENTITY (1,1),
-    ID_CLIENTE                          INT             NULL, 
+    ID_CLIENTE                          INT             NOT NULL, 
     ID_TIPO_ENDERECO                    INT             NOT NULL,
-    CEP                                 NVARCHAR(15)     NOT NULL,
+    ID_CEP                              INT             NOT NULL,
     NUMERO                              INT             NOT NULL,
     COMPLEMENTO                         VARCHAR(100)    NOT NULL,
     CONSTRAINT PK_ENDERECOS_CLIENTES    PRIMARY KEY (ID_ENDERECO_CLIENTE),
     CONSTRAINT FK_ID_TIPO_ENDERECO      FOREIGN KEY (ID_TIPO_ENDERECO) REFERENCES TIPO_ENDERECO(ID_TIPO_ENDERECO),
-    CONSTRAINT FK_CEP                   FOREIGN KEY (CEP)              REFERENCES CEP(CEP),
+    CONSTRAINT FK_ID_CEP                FOREIGN KEY (ID_CEP)           REFERENCES CEP(ID_CEP),
     CONSTRAINT FK_ID_CLIENTE            FOREIGN KEY (ID_CLIENTE)       REFERENCES CLIENTE(ID_CLIENTE)
 );
 GO
@@ -492,6 +493,18 @@ BEGIN
 	CLOSE db_cursor;
 	DEALLOCATE db_cursor;
 END;
+GO
+USE LIVRARIADB;
+
+INSERT INTO LIVRO_AUTOR (ID_LIVRO, ID_AUTOR)
+VALUES 
+(1,1),
+(2,1),
+(3,2),
+(4,3),
+(5,4),
+(6,5)
+
 GO
 USE LIVRARIADB;
 GO

@@ -1,6 +1,3 @@
-USE LIVRARIADB;
-GO
-
 CREATE PROCEDURE dbo.insere_cep_livrariadb
 AS
 BEGIN
@@ -21,18 +18,18 @@ BEGIN
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 		IF @uf IS NULL
-			SET @uf = 'n„o infromado';
+			SET @uf = 'n√£o infromado';
 
 		IF @cidade IS NULL
-			SET @cidade = 'n„o infromado';
+			SET @cidade = 'n√£o infromado';
 
 		IF @bairro IS NULL
-			SET @bairro = 'n„o infromado';
+			SET @bairro = 'n√£o infromado';
 
 		IF @logradouro IS NULL
-			SET @logradouro = 'n„o infromado';
+			SET @logradouro = 'n√£o infromado';
 			
-		IF NOT EXISTS (SELECT CEP FROM LIVRARIADB.dbo.ENDERECOS_CLIENTES WHERE CEP = @cep)
+		IF NOT EXISTS (SELECT CEP FROM LIVRARIADB.dbo.CEP WHERE CEP = @cep)
 		
 			INSERT INTO LIVRARIADB.dbo.CEP (CEP, UF, CIDADE, BAIRRO, LOGRADOURO)
 			VALUES (@cep, @uf, @cidade, @bairro, @logradouro)
