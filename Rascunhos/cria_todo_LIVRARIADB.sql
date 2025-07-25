@@ -179,11 +179,11 @@ CREATE TABLE ENDERECOS_CLIENTES (
     CONSTRAINT FK_ID_CEP                FOREIGN KEY (ID_CEP)           REFERENCES CEP(ID_CEP),
     CONSTRAINT FK_ID_CLIENTE            FOREIGN KEY (ID_CLIENTE)       REFERENCES CLIENTE(ID_CLIENTE)
 );
-GO
+--######################################################
 USE LIVRARIADB;
 GO
 
-CREATE PROCEDURE dbo.insere_atendente_livrariadb
+ALTER PROCEDURE dbo.insere_atendente_livrariadb
 AS
 BEGIN
 
@@ -218,10 +218,10 @@ BEGIN
 	DEALLOCATE db_cursor;
 END;
 GO
+--=======================================================
 USE LIVRARIADB;
 GO
-
-CREATE PROCEDURE dbo.insere_autor_livrariadb
+ALTER PROCEDURE dbo.insere_autor_livrariadb
 AS
 BEGIN
 	DECLARE db_cursor CURSOR FOR
@@ -248,10 +248,10 @@ BEGIN
 	DEALLOCATE db_cursor;
 END;
 GO
+--=======================================================
 USE LIVRARIADB;
 GO
-
-CREATE PROCEDURE dbo.insere_cep_livrariadb
+ALTER PROCEDURE dbo.insere_cep_livrariadb
 AS
 BEGIN
 
@@ -282,7 +282,7 @@ BEGIN
 		IF @logradouro IS NULL
 			SET @logradouro = 'não infromado';
 			
-		IF NOT EXISTS (SELECT CEP FROM LIVRARIADB.dbo.ENDERECOS_CLIENTES WHERE CEP = @cep)
+		IF NOT EXISTS (SELECT CEP FROM LIVRARIADB.dbo.CEP WHERE CEP = @cep)
 		
 			INSERT INTO LIVRARIADB.dbo.CEP (CEP, UF, CIDADE, BAIRRO, LOGRADOURO)
 			VALUES (@cep, @uf, @cidade, @bairro, @logradouro)
@@ -293,10 +293,10 @@ BEGIN
 	DEALLOCATE db_cursor;
 END;
 GO
+--=======================================================
 USE LIVRARIADB;
 GO
-
-CREATE PROCEDURE dbo.insere_livro_livrariadb
+ALTER PROCEDURE dbo.insere_livro_livrariadb
 AS
 BEGIN
 
@@ -336,10 +336,10 @@ BEGIN
 	DEALLOCATE db_cursor;
 END;
 GO
+--=======================================================
 USE LIVRARIADB;
 GO
-
-CREATE PROCEDURE dbo.insere_loja_livrariadb
+ALTER PROCEDURE dbo.insere_loja_livrariadb
 AS
 BEGIN
 
@@ -377,10 +377,10 @@ BEGIN
 	DEALLOCATE db_cursor;
 END;
 GO
+--=======================================================
 USE LIVRARIADB;
 GO
-
-CREATE PROCEDURE dbo.insere_tipo_desconto_livrariadb
+ALTER PROCEDURE dbo.insere_tipo_desconto_livrariadb
 AS
 BEGIN
 	DECLARE db_cursor CURSOR FOR
@@ -424,10 +424,10 @@ BEGIN
 	DEALLOCATE db_cursor;
 END;
 GO
+--=======================================================
 USE LIVRARIADB;
 GO
-
-CREATE PROCEDURE dbo.insere_tipo_endereco_livrariadb
+ALTER PROCEDURE dbo.insere_tipo_endereco_livrariadb
 AS
 BEGIN
 
@@ -460,10 +460,10 @@ BEGIN
 	DEALLOCATE db_cursor;
 END;
 GO
+--=======================================================
 USE LIVRARIADB;
 GO
-
-CREATE PROCEDURE dbo.insere_tipo_pagamento_livrariadb
+ALTER PROCEDURE dbo.insere_tipo_pagamento_livrariadb
 AS
 BEGIN
 	DECLARE db_cursor CURSOR FOR
@@ -495,17 +495,7 @@ BEGIN
 END;
 GO
 USE LIVRARIADB;
-
-INSERT INTO LIVRO_AUTOR (ID_LIVRO, ID_AUTOR)
-VALUES 
-(1,1),
-(2,1),
-(3,2),
-(4,3),
-(5,4),
-(6,5)
-
-GO
+--######################################################
 USE LIVRARIADB;
 GO
 EXEC dbo.insere_cep_livrariadb
@@ -523,3 +513,12 @@ GO
 EXEC dbo.insere_tipo_pagamento_livrariadb
 GO
 EXEC dbo.insere_autor_livrariadb
+
+INSERT INTO LIVRO_AUTOR (ID_LIVRO, ID_AUTOR)
+VALUES 
+(1,1),
+(2,1),
+(3,2),
+(4,3),
+(5,4),
+(6,5)
