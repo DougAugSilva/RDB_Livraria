@@ -1,7 +1,7 @@
 USE STAGE;
 GO
 
-CREATE PROCEDURE dbo.tratamento_dados
+ALTER PROCEDURE dbo.tratamento_dados
 AS
 BEGIN
 
@@ -52,8 +52,11 @@ BEGIN
             @valor_item, @valor_total, @condicao_pagamento, @titulo, @autor, @id_loja, @id_atendente,
             @data_venda, @data_processamento, @motivo_rejeicao)
 
-            INSERT INTO STAGE.dbo.VALIDACAO (NUMERO_NOTA_FISCAL, DATA_PROCESSAMENTO)
-            VALUES (@numero_nota_fiscal, @data_processamento)
+            IF NOT EXISTS (SELECT NUMERO_NOTA_FISCAL FROM STAGE.dbo.VALIDACAO WHERE NUMERO_NOTA_FISCAL = @numero_nota_fiscal)
+                INSERT INTO STAGE.dbo.VALIDACAO (NUMERO_NOTA_FISCAL, DATA_PROCESSAMENTO)
+                VALUES (@numero_nota_fiscal, @data_processamento)
+
+            DELETE FROM  STAGE.dbo.MOVIMENTACAO_LIVROS WHERE NUMERO_NOTA_FISCAL = @numero_nota_fiscal
 
         IF NOT EXISTS (SELECT NUMERO_NOTA_FISCAL FROM STAGE.dbo.VALIDACAO WHERE NUMERO_NOTA_FISCAL = @numero_nota_fiscal)
 
@@ -61,8 +64,9 @@ BEGIN
             SET TIPO_ENDERECO        =   UPPER(@tipo_endereco)
             WHERE NUMERO_NOTA_FISCAL =   @numero_nota_fiscal;
 
-            INSERT INTO STAGE.dbo.VALIDACAO (NUMERO_NOTA_FISCAL, DATA_PROCESSAMENTO)
-            VALUES (@numero_nota_fiscal, @data_processamento)
+             IF NOT EXISTS (SELECT NUMERO_NOTA_FISCAL FROM STAGE.dbo.VALIDACAO WHERE NUMERO_NOTA_FISCAL = @numero_nota_fiscal)
+                 INSERT INTO STAGE.dbo.VALIDACAO (NUMERO_NOTA_FISCAL, DATA_PROCESSAMENTO)
+                 VALUES (@numero_nota_fiscal, @data_processamento)
     
         FETCH NEXT FROM db_cursor INTO  @nome_cliente, @numero_endereco, @complemento, @cep, 
          @tipo_endereco, @email_cliente, @telefone_cliente, @cpf, @numero_nota_fiscal, @quantidade,
@@ -73,6 +77,8 @@ BEGIN
 	DEALLOCATE db_cursor;
 END;
 
+
+
 -- TESTANDO 
 EXEC dbo.tratamento_dados;
 
@@ -82,8 +88,43 @@ SELECT * FROM MOVIMENTACAO_LIVROS_REJEITADOS;
 
 SELECT * FROM MOVIMENTACAO_LIVROS;
 
+--================================
+DROP TABLE MOVIMENTACAO_LIVROS_REJEITADOS;
 
+DROP TABLE VALIDACAO;
 
+EXEC dbo.insere_csv_movimentacao_livros_stage;
+
+-- TABELA DAS NOTAS REJEITADAS
+CREATE TABLE MOVIMENTACAO_LIVROS_REJEITADOS (
+    NOME_CLIENTE_REJEITADOS         NVARCHAR(100)  NULL,   
+    NUMERO_ENDERECO_REJEITADOS      INT            NULL,
+    COMPLEMENTO_REJEITADOS          NVARCHAR(100)  NULL,
+    CEP_REJEITADOS                  NVARCHAR(15)   NULL,
+    TIPO_ENDERECO_REJEITADOS        VARCHAR(5)     NULL,
+    EMAIL_CLIENTE_REJEITADOS        NVARCHAR(100)  NULL,    
+    TELEFONE_CLIENTE_REJEITADOS     NVARCHAR(20)   NULL,      
+    CPF_REJEITADOS                  NVARCHAR(14)   NULL,    
+    NUMERO_NOTA_FISCAL_REJEITADOS   INT            NULL,
+    QUANTIDADE_REJEITADOS           INT            NULL,
+    VALOR_ITEM_REJEITADOS           DECIMAL(10,2)  NULL,
+    VALOR_TOTAL_REJEITADOS          DECIMAL(10,2)  NULL,
+    CONDICAO_PAGAMENTO_REJEITADOS   NVARCHAR(100)  NULL,
+    TITULO_REJEITADOS               NVARCHAR(100)  NULL,
+    AUTOR_REJEITADOS                NVARCHAR(100)  NULL,
+    ID_LOJA_REJEITADOS              INT            NULL,
+    ID_ATENDENTE_REJEITADOS         INT            NULL,
+    DATA_VENDA_REJEITADOS           DATE           NULL,
+    DATA_PROCESSAMENTO_REJEITADOS   DATE           NULL,
+    MOTIVO_REJEICAO                 VARCHAR(100)   NULL
+);
+GO
+
+--  ARMAZENA AS NOTAS FISCAIS JA PROCESSADAS
+CREATE TABLE VALIDACAO (
+    NUMERO_NOTA_FISCAL      INT     NOT NULL,
+    DATA_PROCESSAMENTO      DATE    NOT NULL
+);
 
 
 /* 
