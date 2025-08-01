@@ -41,7 +41,6 @@ BEGIN
 
     WHILE @@FETCH_STATUS = 0
 	BEGIN 
-      
         IF EXISTS (
             SELECT 1 
             FROM STAGE.dbo.VALIDACAO
@@ -104,7 +103,7 @@ BEGIN
 	DEALLOCATE db_cursor;
 END;
 
--- TESTANDO 
+-- TESTANDO ==============================================================
 
 -- INSERE DADOS BRUTOS NO LIVRARIA DB DO STAGE
 EXEC dbo.insere_csv_movimentacao_livros_stage;
