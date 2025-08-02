@@ -21,6 +21,7 @@ SELECT pegar_data.NUMERO_NOTA_FISCAL,
     ELSE 'OK'
   END) AS VERIFICADOS
 FROM pegar_data
+WHERE VERIFICADOS == 'REJEITADO'
 
 --====================================================================
 -- TESTANDO
@@ -39,7 +40,7 @@ WITH pegar_data_2 AS (
         NUMERO_NOTA_FISCAL
 )
 
-SELECT * FROM pegar_data_2;
+SELECT * FROM pegar_data_2 WHERE VERIFICADOS = 'REJEITADO';
 
 -- validacao por CEP INVALIDO
 
@@ -209,3 +210,4 @@ DELETE FROM  VALIDACAO;
 GO
 
 DELETE FROM  MOVIMENTACAO_LIVROS_TRATADOS;
+
