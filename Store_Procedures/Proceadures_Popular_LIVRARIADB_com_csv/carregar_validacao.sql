@@ -16,7 +16,7 @@ BEGIN
     AND R.DATA_PROCESSAMENTO_REJEITADOS IS NULL
 END
 
-exec dbo.carregar_validacao;
+EXEC dbo.carregar_validacao;
 
 
 SELECT * FROM VALIDACAO;
