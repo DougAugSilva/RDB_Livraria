@@ -1,4 +1,4 @@
-tipo_de_erro
-nota ja processada pelo sistema
-possui mais de uma data de processamento para a mesma nota
-cep invalido que nao está na tenbela de CEPs da LIVRARIADB
+id_erro,tipo_de_erro
+1,nota ja processada pelo sistema
+2,possui mais de uma data de processamento para a mesma nota
+3,cep invalido que nao está na tenbela de CEPs da LIVRARIADB

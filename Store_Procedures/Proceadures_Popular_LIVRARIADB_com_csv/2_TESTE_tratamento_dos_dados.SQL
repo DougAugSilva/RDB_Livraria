@@ -31,7 +31,7 @@ BEGIN
     DECLARE @data_venda         DATE;
     DECLARE @data_processamento DATE;
 
-    DECLARE @motivo_rejeicao    NVARCHAR(100);
+    DECLARE @id_erro   INT;
 
     OPEN db_cursor
     FETCH NEXT FROM db_cursor INTO  @nome_cliente, @numero_endereco, @complemento, @cep, 
@@ -90,17 +90,17 @@ BEGIN
             WHERE NUMERO_NOTA_FISCAL = @numero_nota_fiscal
             AND DATA_PROCESSAMENTO  = @data_processamento
         ) BEGIN
-            SET @motivo_rejeicao = 'ja processada'
+            SET @id_erro  = 1
         
             INSERT INTO STAGE.dbo.MOVIMENTACAO_LIVROS_REJEITADOS (NOME_CLIENTE_REJEITADOS, NUMERO_ENDERECO_REJEITADOS, COMPLEMENTO_REJEITADOS, CEP_REJEITADOS,
             TIPO_ENDERECO_REJEITADOS, EMAIL_CLIENTE_REJEITADOS, TELEFONE_CLIENTE_REJEITADOS, CPF_REJEITADOS, NUMERO_NOTA_FISCAL_REJEITADOS, QUANTIDADE_REJEITADOS, 
             VALOR_ITEM_REJEITADOS, VALOR_TOTAL_REJEITADOS, CONDICAO_PAGAMENTO_REJEITADOS, TITULO_REJEITADOS, AUTOR_REJEITADOS, ID_LOJA_REJEITADOS,
-            ID_ATENDENTE_REJEITADOS, DATA_VENDA_REJEITADOS, DATA_PROCESSAMENTO_REJEITADOS, MOTIVO_REJEICAO)
+            ID_ATENDENTE_REJEITADOS, DATA_VENDA_REJEITADOS, DATA_PROCESSAMENTO_REJEITADOS, ID_ERRO)
 
             VALUES (@nome_cliente, @numero_endereco, @complemento, @cep, 
             @tipo_endereco, @email_cliente, @telefone_cliente, @cpf, @numero_nota_fiscal, @quantidade,
             @valor_item, @valor_total, @condicao_pagamento, @titulo, @autor, @id_loja, @id_atendente,
-            @data_venda, @data_processamento, @motivo_rejeicao)
+            @data_venda, @data_processamento, @id_erro)
         END
         --========================================================================
         -- 2 validação (seleciona as notas com as datas de processamento válidas)
@@ -137,17 +137,17 @@ BEGIN
             WHERE NUMERO_NOTA_FISCAL_REJEITADOS = @numero_nota_fiscal 
             AND TITULO_REJEITADOS = @titulo
             )BEGIN
-                SET @motivo_rejeicao = 'data invalida'
+                SET @id_erro = 2
 
                 INSERT INTO STAGE.dbo.MOVIMENTACAO_LIVROS_REJEITADOS (NOME_CLIENTE_REJEITADOS, NUMERO_ENDERECO_REJEITADOS, COMPLEMENTO_REJEITADOS, CEP_REJEITADOS,
                 TIPO_ENDERECO_REJEITADOS, EMAIL_CLIENTE_REJEITADOS, TELEFONE_CLIENTE_REJEITADOS, CPF_REJEITADOS, NUMERO_NOTA_FISCAL_REJEITADOS, QUANTIDADE_REJEITADOS, 
                 VALOR_ITEM_REJEITADOS, VALOR_TOTAL_REJEITADOS, CONDICAO_PAGAMENTO_REJEITADOS, TITULO_REJEITADOS, AUTOR_REJEITADOS, ID_LOJA_REJEITADOS,
-                ID_ATENDENTE_REJEITADOS, DATA_VENDA_REJEITADOS, DATA_PROCESSAMENTO_REJEITADOS, MOTIVO_REJEICAO)
+                ID_ATENDENTE_REJEITADOS, DATA_VENDA_REJEITADOS, DATA_PROCESSAMENTO_REJEITADOS, ID_ERRO)
 
                 VALUES (@nome_cliente, @numero_endereco, @complemento, @cep, 
                 @tipo_endereco, @email_cliente, @telefone_cliente, @cpf, @numero_nota_fiscal, @quantidade,
                 @valor_item, @valor_total, @condicao_pagamento, @titulo, @autor, @id_loja, @id_atendente,
-                @data_venda, @data_processamento, @motivo_rejeicao)
+                @data_venda, @data_processamento, @id_erro)
             END
         END
         --========================================================================
@@ -182,17 +182,17 @@ BEGIN
                     WHERE VERIFICADOS = 'REJEITADO')  
                     OR @cep NOT IN (SELECT CEP FROM LIVRARIADB.dbo.CEP)
         )BEGIN
-            SET @motivo_rejeicao = 'cep invalido'
+            SET @id_erro = 'cep invalido'
 
             INSERT INTO STAGE.dbo.MOVIMENTACAO_LIVROS_REJEITADOS (NOME_CLIENTE_REJEITADOS, NUMERO_ENDERECO_REJEITADOS, COMPLEMENTO_REJEITADOS, CEP_REJEITADOS,
             TIPO_ENDERECO_REJEITADOS, EMAIL_CLIENTE_REJEITADOS, TELEFONE_CLIENTE_REJEITADOS, CPF_REJEITADOS, NUMERO_NOTA_FISCAL_REJEITADOS, QUANTIDADE_REJEITADOS, 
             VALOR_ITEM_REJEITADOS, VALOR_TOTAL_REJEITADOS, CONDICAO_PAGAMENTO_REJEITADOS, TITULO_REJEITADOS, AUTOR_REJEITADOS, ID_LOJA_REJEITADOS,
-            ID_ATENDENTE_REJEITADOS, DATA_VENDA_REJEITADOS, DATA_PROCESSAMENTO_REJEITADOS, MOTIVO_REJEICAO)
+            ID_ATENDENTE_REJEITADOS, DATA_VENDA_REJEITADOS, DATA_PROCESSAMENTO_REJEITADOS, ID_ERRO)
 
             VALUES (@nome_cliente, @numero_endereco, @complemento, @cep, 
             @tipo_endereco, @email_cliente, @telefone_cliente, @cpf, @numero_nota_fiscal, @quantidade,
             @valor_item, @valor_total, @condicao_pagamento, @titulo, @autor, @id_loja, @id_atendente,
-            @data_venda, @data_processamento, @motivo_rejeicao)
+            @data_venda, @data_processamento, @id_erro)
         END
         --FIM NOVO
 */

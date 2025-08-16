@@ -24,6 +24,8 @@ EXEC dbo.insere_tipo_pagamento_stage
 
 EXEC dbo.insere_autor_stage
 
+EXEC dbo.insere_tipos_de_erros_stage
+
 --====================================================================================
 -- Executa proceadures para inserção das tabelas essenciais do STAGE para o LIVRARIADB
 --====================================================================================
@@ -72,6 +74,9 @@ SELECT * FROM TIPO_PAGAMENTO;
 
 -- dbo.insere_autor_stage
 SELECT * FROM AUTOR;
+
+-- dbo.insere_tipos_de_erros_stage
+SELECT * FROM TIPO_DE_ERRO;
 
 -- ===========================================================
 -- Verifica valores inseridos da tabelas essenciais LIVRARIADB
