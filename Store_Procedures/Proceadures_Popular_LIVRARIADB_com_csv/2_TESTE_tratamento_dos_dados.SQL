@@ -236,6 +236,9 @@ GO
 
 DELETE FROM  MOVIMENTACAO_LIVROS_TRATADOS;
 
+-- livro e livro autor já no banco
+-- tratar os dados do tipo pagamento para JOINS
+-- alterar modelagem de dados com tabela de erros (tabela com Id do erro e descrição do erro)
         
         
         
