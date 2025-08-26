@@ -155,7 +155,7 @@ CREATE TABLE ENDERECOS_CLIENTES (
 GO
 
 CREATE TABLE CEP (
-    CEP                 VARCHAR(15)     NOT NULL,
+    CEP                 VARCHAR(20)     NOT NULL,
     UF                  VARCHAR(5)      NOT NULL,
     CIDADE              VARCHAR(150)    NOT NULL,
     BAIRRO              VARCHAR(150)    NOT NULL,
