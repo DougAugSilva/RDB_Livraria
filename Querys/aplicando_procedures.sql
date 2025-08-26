@@ -24,12 +24,14 @@ EXEC dbo.insere_tipo_pagamento_stage
 
 EXEC dbo.insere_autor_stage
 
+EXEC dbo.insere_tipos_de_erros_stage
+
 --====================================================================================
 -- Executa proceadures para inserção das tabelas essenciais do STAGE para o LIVRARIADB
 --====================================================================================
 USE LIVRARIADB;
 
-EXEC dbo.insere_cep_livrariadb
+EXEC dbo.insere_cep_livrariadb_2
 
 EXEC dbo.insere_livro_livrariadb
 
@@ -50,7 +52,7 @@ EXEC dbo.insere_autor_livrariadb
 USE STAGE;
 
 -- dbo.insere_cep_stage
-SELECT * FROM CEP;
+SELECT TOP 100 * FROM CEP;
 
 -- dbo.insere_livro_stage
 SELECT * FROM LIVRO;
@@ -73,13 +75,16 @@ SELECT * FROM TIPO_PAGAMENTO;
 -- dbo.insere_autor_stage
 SELECT * FROM AUTOR;
 
+-- dbo.insere_tipos_de_erros_stage
+SELECT * FROM TIPO_DE_ERRO;
+
 -- ===========================================================
 -- Verifica valores inseridos da tabelas essenciais LIVRARIADB
 -- ===========================================================
 USE LIVRARIADB;
 
 -- dbo.insere_cep_livrariadb
-SELECT * FROM CEP;
+SELECT TOP 100 * FROM CEP;
 
 -- dbo.insere_livro_livrariadb
 SELECT * FROM LIVRO;

@@ -39,3 +39,13 @@ BEGIN
 	CLOSE db_cursor;
 	DEALLOCATE db_cursor;
 END;
+
+USE LIVRARIADB;
+GO
+CREATE PROCEDURE dbo.insere_cep_livrariadb_2
+AS
+BEGIN
+	INSERT INTO LIVRARIADB.dbo.CEP
+	SELECT *
+	FROM STAGE.dbo.CEP
+END

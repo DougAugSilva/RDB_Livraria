@@ -1,7 +1,7 @@
 USE STAGE;
-GO
+GO 
 
-ALTER PROCEDURE dbo.tratamento_dados_2
+ALTER PROCEDURE dbo.tratamento_dados_4
 AS
 BEGIN
 
@@ -31,7 +31,7 @@ BEGIN
     DECLARE @data_venda         DATE;
     DECLARE @data_processamento DATE;
 
-    DECLARE @motivo_rejeicao    NVARCHAR(100);
+    DECLARE @id_erro   INT;
 
     OPEN db_cursor
     FETCH NEXT FROM db_cursor INTO  @nome_cliente, @numero_endereco, @complemento, @cep, 
@@ -90,17 +90,19 @@ BEGIN
             WHERE NUMERO_NOTA_FISCAL = @numero_nota_fiscal
             AND DATA_PROCESSAMENTO  = @data_processamento
         ) BEGIN
-            SET @motivo_rejeicao = 'ja processada'
+            SET @id_erro  = 1
         
-            INSERT INTO STAGE.dbo.MOVIMENTACAO_LIVROS_REJEITADOS (NOME_CLIENTE_REJEITADOS, NUMERO_ENDERECO_REJEITADOS, COMPLEMENTO_REJEITADOS, CEP_REJEITADOS,
-            TIPO_ENDERECO_REJEITADOS, EMAIL_CLIENTE_REJEITADOS, TELEFONE_CLIENTE_REJEITADOS, CPF_REJEITADOS, NUMERO_NOTA_FISCAL_REJEITADOS, QUANTIDADE_REJEITADOS, 
-            VALOR_ITEM_REJEITADOS, VALOR_TOTAL_REJEITADOS, CONDICAO_PAGAMENTO_REJEITADOS, TITULO_REJEITADOS, AUTOR_REJEITADOS, ID_LOJA_REJEITADOS,
-            ID_ATENDENTE_REJEITADOS, DATA_VENDA_REJEITADOS, DATA_PROCESSAMENTO_REJEITADOS, MOTIVO_REJEICAO)
+            INSERT INTO STAGE.dbo.MOVIMENTACAO_LIVROS_REJEITADOS (NOME_CLIENTE_REJEITADOS, NUMERO_ENDERECO_REJEITADOS, 
+            COMPLEMENTO_REJEITADOS, CEP_REJEITADOS,TIPO_ENDERECO_REJEITADOS, EMAIL_CLIENTE_REJEITADOS, 
+            TELEFONE_CLIENTE_REJEITADOS, CPF_REJEITADOS, NUMERO_NOTA_FISCAL_REJEITADOS, QUANTIDADE_REJEITADOS, 
+            VALOR_ITEM_REJEITADOS, VALOR_TOTAL_REJEITADOS, CONDICAO_PAGAMENTO_REJEITADOS, TITULO_REJEITADOS, 
+            AUTOR_REJEITADOS, ID_LOJA_REJEITADOS,ID_ATENDENTE_REJEITADOS, DATA_VENDA_REJEITADOS,
+             DATA_PROCESSAMENTO_REJEITADOS, ID_ERRO)
 
             VALUES (@nome_cliente, @numero_endereco, @complemento, @cep, 
             @tipo_endereco, @email_cliente, @telefone_cliente, @cpf, @numero_nota_fiscal, @quantidade,
             @valor_item, @valor_total, @condicao_pagamento, @titulo, @autor, @id_loja, @id_atendente,
-            @data_venda, @data_processamento, @motivo_rejeicao)
+            @data_venda, @data_processamento, @id_erro)
         END
         --========================================================================
         -- 2 validação (seleciona as notas com as datas de processamento válidas)
@@ -137,66 +139,88 @@ BEGIN
             WHERE NUMERO_NOTA_FISCAL_REJEITADOS = @numero_nota_fiscal 
             AND TITULO_REJEITADOS = @titulo
             )BEGIN
-                SET @motivo_rejeicao = 'data invalida'
+                SET @id_erro = 2
 
-                INSERT INTO STAGE.dbo.MOVIMENTACAO_LIVROS_REJEITADOS (NOME_CLIENTE_REJEITADOS, NUMERO_ENDERECO_REJEITADOS, COMPLEMENTO_REJEITADOS, CEP_REJEITADOS,
-                TIPO_ENDERECO_REJEITADOS, EMAIL_CLIENTE_REJEITADOS, TELEFONE_CLIENTE_REJEITADOS, CPF_REJEITADOS, NUMERO_NOTA_FISCAL_REJEITADOS, QUANTIDADE_REJEITADOS, 
-                VALOR_ITEM_REJEITADOS, VALOR_TOTAL_REJEITADOS, CONDICAO_PAGAMENTO_REJEITADOS, TITULO_REJEITADOS, AUTOR_REJEITADOS, ID_LOJA_REJEITADOS,
-                ID_ATENDENTE_REJEITADOS, DATA_VENDA_REJEITADOS, DATA_PROCESSAMENTO_REJEITADOS, MOTIVO_REJEICAO)
+                INSERT INTO STAGE.dbo.MOVIMENTACAO_LIVROS_REJEITADOS (NOME_CLIENTE_REJEITADOS, NUMERO_ENDERECO_REJEITADOS, 
+                COMPLEMENTO_REJEITADOS, CEP_REJEITADOS,TIPO_ENDERECO_REJEITADOS, EMAIL_CLIENTE_REJEITADOS, 
+                TELEFONE_CLIENTE_REJEITADOS, CPF_REJEITADOS, NUMERO_NOTA_FISCAL_REJEITADOS, QUANTIDADE_REJEITADOS, 
+                VALOR_ITEM_REJEITADOS, VALOR_TOTAL_REJEITADOS, CONDICAO_PAGAMENTO_REJEITADOS, TITULO_REJEITADOS, 
+                AUTOR_REJEITADOS, ID_LOJA_REJEITADOS,ID_ATENDENTE_REJEITADOS, DATA_VENDA_REJEITADOS, 
+                DATA_PROCESSAMENTO_REJEITADOS, ID_ERRO)
 
                 VALUES (@nome_cliente, @numero_endereco, @complemento, @cep, 
                 @tipo_endereco, @email_cliente, @telefone_cliente, @cpf, @numero_nota_fiscal, @quantidade,
                 @valor_item, @valor_total, @condicao_pagamento, @titulo, @autor, @id_loja, @id_atendente,
-                @data_venda, @data_processamento, @motivo_rejeicao)
+                @data_venda, @data_processamento, @id_erro)
             END
         END
         --========================================================================
         -- 3 validação (seleciona as notas com ceps na tabeela CEP da LIVRARIADB)
+       
+        -- insere os rejeitados na MOVIMENTACAO_LIVROS_REJEITADOS  
+        IF EXISTS(
+            SELECT 
+                *
+            FROM 
+                ##pegar_notas_datas_certas
+            WHERE 
+                -- 1. Filtra diretamente pelo status 'REJEITADO' nesta tabela
+                VERIFICADOS = 'REJEITADO'                 
+                -- 2. Verifica se o CEP da linha atual NÃO EXISTE na tabela de CEPs do outro banco
+                AND @cep NOT IN (SELECT CEP FROM LIVRARIADB.dbo.CEP)
+        )BEGIN
+            SET @id_erro = 3
+
+            INSERT INTO STAGE.dbo.MOVIMENTACAO_LIVROS_REJEITADOS (NOME_CLIENTE_REJEITADOS, NUMERO_ENDERECO_REJEITADOS, COMPLEMENTO_REJEITADOS, CEP_REJEITADOS,
+            TIPO_ENDERECO_REJEITADOS, EMAIL_CLIENTE_REJEITADOS, TELEFONE_CLIENTE_REJEITADOS, CPF_REJEITADOS, NUMERO_NOTA_FISCAL_REJEITADOS, QUANTIDADE_REJEITADOS, 
+            VALOR_ITEM_REJEITADOS, VALOR_TOTAL_REJEITADOS, CONDICAO_PAGAMENTO_REJEITADOS, TITULO_REJEITADOS, AUTOR_REJEITADOS, ID_LOJA_REJEITADOS,
+            ID_ATENDENTE_REJEITADOS, DATA_VENDA_REJEITADOS, DATA_PROCESSAMENTO_REJEITADOS, ID_ERRO)
+
+            VALUES (@nome_cliente, @numero_endereco, @complemento, @cep, 
+            @tipo_endereco, @email_cliente, @telefone_cliente, @cpf, @numero_nota_fiscal, @quantidade,
+            @valor_item, @valor_total, @condicao_pagamento, @titulo, @autor, @id_loja, @id_atendente,
+            @data_venda, @data_processamento, @id_erro)
+        END
+
+        --insere valores na MOVIMENTACAO_LIVROS_TRATADOS
         SELECT *
         INTO 
             #seleciona_cep
         FROM 
             ##pegar_notas_nao_processadas
         WHERE 
-            NUMERO_NOTA_FISCAL != (
+            @numero_nota_fiscal != (
                 SELECT NUMERO_NOTA_FISCAL 
                 FROM ##pegar_notas_datas_certas 
                 WHERE VERIFICADOS = 'REJEITADO')
-                AND @cep IN (SELECT CEP FROM LIVRARIADB.dbo.CEP)
+                AND @cep IN (SELECT CEP FROM STAGE.dbo.CEP)
 
-        INSERT INTO STAGE.dbo.MOVIMENTACAO_LIVROS_TRATADOS
-        SELECT *
-        FROM #seleciona_cep;
-
-        --NOVO ERRO
-/*        
-        -- insere os rejeitados na MOVIMENTACAO_LIVROS_REJEITADOS  
-        IF EXISTS(
-            SELECT *
+        IF NOT EXISTS(
+            SELECT 
+                *
             FROM 
-                ##pegar_notas_nao_processadas
+                ##pegar_notas_datas_certas
             WHERE 
-                NUMERO_NOTA_FISCAL = (
-                    SELECT NUMERO_NOTA_FISCAL 
-                    FROM ##pegar_notas_datas_certas 
-                    WHERE VERIFICADOS = 'REJEITADO')  
-                    OR @cep NOT IN (SELECT CEP FROM LIVRARIADB.dbo.CEP)
-        )BEGIN
-            SET @motivo_rejeicao = 'cep invalido'
-
-            INSERT INTO STAGE.dbo.MOVIMENTACAO_LIVROS_REJEITADOS (NOME_CLIENTE_REJEITADOS, NUMERO_ENDERECO_REJEITADOS, COMPLEMENTO_REJEITADOS, CEP_REJEITADOS,
-            TIPO_ENDERECO_REJEITADOS, EMAIL_CLIENTE_REJEITADOS, TELEFONE_CLIENTE_REJEITADOS, CPF_REJEITADOS, NUMERO_NOTA_FISCAL_REJEITADOS, QUANTIDADE_REJEITADOS, 
-            VALOR_ITEM_REJEITADOS, VALOR_TOTAL_REJEITADOS, CONDICAO_PAGAMENTO_REJEITADOS, TITULO_REJEITADOS, AUTOR_REJEITADOS, ID_LOJA_REJEITADOS,
-            ID_ATENDENTE_REJEITADOS, DATA_VENDA_REJEITADOS, DATA_PROCESSAMENTO_REJEITADOS, MOTIVO_REJEICAO)
-
-            VALUES (@nome_cliente, @numero_endereco, @complemento, @cep, 
-            @tipo_endereco, @email_cliente, @telefone_cliente, @cpf, @numero_nota_fiscal, @quantidade,
-            @valor_item, @valor_total, @condicao_pagamento, @titulo, @autor, @id_loja, @id_atendente,
-            @data_venda, @data_processamento, @motivo_rejeicao)
+                -- 1. Filtra diretamente pelo status 'REJEITADO' nesta tabela
+                VERIFICADOS = 'REJEITADO'                 
+                -- 2. Verifica se o CEP da linha atual NÃO EXISTE na tabela de CEPs do outro banco
+                AND @cep NOT IN (SELECT CEP FROM LIVRARIADB.dbo.CEP)
+        )
+        BEGIN
+            INSERT INTO STAGE.dbo.MOVIMENTACAO_LIVROS_TRATADOS
+            SELECT *
+            FROM #seleciona_cep
+            WHERE NOT EXISTS (
+                SELECT 1
+                FROM 
+                    STAGE.dbo.MOVIMENTACAO_LIVROS_TRATADOS
+                WHERE 
+                    STAGE.dbo.MOVIMENTACAO_LIVROS_TRATADOS.NUMERO_NOTA_FISCAL_TRATADOS = #seleciona_cep.NUMERO_NOTA_FISCAL
+                    AND STAGE.dbo.MOVIMENTACAO_LIVROS_TRATADOS.TITULO_TRATADOS = #seleciona_cep.TITULO
+                    AND @cep NOT IN (SELECT CEP_REJEITADOS FROM STAGE.dbo.MOVIMENTACAO_LIVROS_REJEITADOS)
+            )
         END
         --FIM NOVO
-*/
-
         FETCH NEXT FROM db_cursor INTO  @nome_cliente, @numero_endereco, @complemento, @cep, 
         @tipo_endereco, @email_cliente, @telefone_cliente, @cpf, @numero_nota_fiscal, @quantidade,
         @valor_item, @valor_total, @condicao_pagamento, @titulo, @autor, @id_loja, @id_atendente,
@@ -209,11 +233,11 @@ END;
 
 -- TESTANDO ==============================================================
 
--- INSERE DADOS BRUTOS NO LIVRARIA DB DO STAGE
+-- INSERE DADOS BRUTOS NO MOVIEMNTACAO_LIVROS DO STAGE
 EXEC dbo.insere_csv_movimentacao_livros_stage;
 
 -- INSERE NAS TABELAS MOVIMENTACAO TRATAODS OU REJEITADOS
-EXEC dbo.tratamento_dados_2;
+EXEC dbo.tratamento_dados_4;
 
 -- CARREGA NA VALIDACAO QUAIS NOTAS ESTÃO NA TABELA MOVIMENTACAO TRATADOS
 EXEC dbo.carregar_validacao;
@@ -221,13 +245,17 @@ EXEC dbo.carregar_validacao;
 
 SELECT * FROM MOVIMENTACAO_LIVROS;
 
-SELECT * FROM MOVIMENTACAO_LIVROS_REJEITADOS;
+SELECT * FROM MOVIMENTACAO_LIVROS_REJEITADOS 
+--LEFT JOIN TIPO_DE_ERRO ON MOVIMENTACAO_LIVROS_REJEITADOS.ID_ERRO = TIPO_DE_ERRO.ID_ERRO;
 
 SELECT * FROM MOVIMENTACAO_LIVROS_TRATADOS;
 
 SELECT * FROM VALIDACAO;
 
 --================================
+DELETE FROM MOVIMENTACAO_LIVROS;
+GO
+
 DELETE FROM MOVIMENTACAO_LIVROS_REJEITADOS;
 GO
 
@@ -236,6 +264,19 @@ GO
 
 DELETE FROM  MOVIMENTACAO_LIVROS_TRATADOS;
 
-        
-        
-        
+-- livro e livro autor já no banco
+-- tratar os dados do tipo pagamento para JOINS
+-- alterar modelagem de dados com tabela de erros (tabela com Id do erro e descrição do erro)
+SELECT TOP 10 * FROM LIVRARIADB.dbo.CEP;
+
+-- erro por conta da tabelas dos ceps na LIVRARIADB estar inconpleta      
+Select count(*) from LIVRARIADB.dbo.CEP AS Quant_ceps_LIVRARIADB; 
+
+select count(*) from STAGE.dbo.CEP AS Quant_ceps_STAGE;
+
+-- usar 
+-- mudar cep para varchar 20
+-- tratar a string desnoramalizada para uma string normalizada para ajuar a join
+
+-- historico divergente existe quando o recebimento aconteceu de uma maneira não prevista 
+-- a tabela tipo desconto é de validação se o desconto foi devidamento aplicado
