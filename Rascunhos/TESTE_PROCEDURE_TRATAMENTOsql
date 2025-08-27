@@ -123,7 +123,8 @@ BEGIN
         SELECT
             NUMERO_NOTA_FISCAL,
             (CASE
-            WHEN  MIN(DATA_PROCESSAMENTO) != MAX(DATA_PROCESSAMENTO) THEN 'REJEITADO'
+            WHEN  MIN(DATA_PROCESSAMENTO) != 
+            MAX(DATA_PROCESSAMENTO) THEN 'REJEITADO'
             ELSE 'OK'
             END) AS VERIFICADOS       
         FROM 
@@ -158,20 +159,27 @@ BEGIN
                 NUMERO_NOTA_FISCAL = @numero_nota_fiscal
                 AND VERIFICADOS = 'REJEITADO'
         )BEGIN
-            SET @id_erro  = 2
+            IF NOT EXISTS(
+            SELECT * 
+            FROM STAGE.dbo.MOVIMENTACAO_LIVROS_REJEITADOS
+            WHERE NUMERO_NOTA_FISCAL_REJEITADOS = @numero_nota_fiscal 
+            AND TITULO_REJEITADOS = @titulo
+            )BEGIN
+                SET @id_erro  = 2
 
-            INSERT INTO 
-                STAGE.dbo.MOVIMENTACAO_LIVROS_REJEITADOS(NOME_CLIENTE_REJEITADOS, NUMERO_ENDERECO_REJEITADOS,
-                COMPLEMENTO_REJEITADOS, CEP_REJEITADOS,TIPO_ENDERECO_REJEITADOS, EMAIL_CLIENTE_REJEITADOS, 
-                TELEFONE_CLIENTE_REJEITADOS, CPF_REJEITADOS, NUMERO_NOTA_FISCAL_REJEITADOS, QUANTIDADE_REJEITADOS, 
-                VALOR_ITEM_REJEITADOS, VALOR_TOTAL_REJEITADOS, CONDICAO_PAGAMENTO_REJEITADOS, TITULO_REJEITADOS, 
-                AUTOR_REJEITADOS, ID_LOJA_REJEITADOS,ID_ATENDENTE_REJEITADOS, DATA_VENDA_REJEITADOS, 
-                DATA_PROCESSAMENTO_REJEITADOS, ID_ERRO)
+                INSERT INTO 
+                    STAGE.dbo.MOVIMENTACAO_LIVROS_REJEITADOS(NOME_CLIENTE_REJEITADOS, NUMERO_ENDERECO_REJEITADOS,
+                    COMPLEMENTO_REJEITADOS, CEP_REJEITADOS,TIPO_ENDERECO_REJEITADOS, EMAIL_CLIENTE_REJEITADOS, 
+                    TELEFONE_CLIENTE_REJEITADOS, CPF_REJEITADOS, NUMERO_NOTA_FISCAL_REJEITADOS, QUANTIDADE_REJEITADOS, 
+                    VALOR_ITEM_REJEITADOS, VALOR_TOTAL_REJEITADOS, CONDICAO_PAGAMENTO_REJEITADOS, TITULO_REJEITADOS, 
+                    AUTOR_REJEITADOS, ID_LOJA_REJEITADOS,ID_ATENDENTE_REJEITADOS, DATA_VENDA_REJEITADOS, 
+                    DATA_PROCESSAMENTO_REJEITADOS, ID_ERRO)
 
-            VALUES (@nome_cliente, @numero_endereco, @complemento, @cep, 
-                @tipo_endereco, @email_cliente, @telefone_cliente, @cpf, @numero_nota_fiscal, @quantidade,
-                @valor_item, @valor_total, @condicao_pagamento, @titulo, @autor, @id_loja, @id_atendente,
-                @data_venda, @data_processamento, @id_erro)
+                VALUES (@nome_cliente, @numero_endereco, @complemento, @cep, 
+                    @tipo_endereco, @email_cliente, @telefone_cliente, @cpf, @numero_nota_fiscal, @quantidade,
+                    @valor_item, @valor_total, @condicao_pagamento, @titulo, @autor, @id_loja, @id_atendente,
+                    @data_venda, @data_processamento, @id_erro)
+            END
         END
         --=========================================================
         --[PROVISORIO]: Insrindo valores já tratados pela pipeline
