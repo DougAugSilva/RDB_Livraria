@@ -8,44 +8,44 @@ IF OBJECT_ID('nome_proceadure') IS NOT NULL
 --============================================================
 USE STAGE;
 
-EXEC dbo.insere_cep_stage
-
-EXEC dbo.insere_livro_stage
-
-EXEC dbo.insere_loja_stage
-
-EXEC dbo.insere_atendente_stage
-
-EXEC dbo.insere_tipo_endereco_stage
-
-EXEC dbo.insere_tipo_desconto_stage
-
-EXEC dbo.insere_tipo_pagamento_stage
-
-EXEC dbo.insere_autor_stage
-
-EXEC dbo.insere_tipos_de_erros_stage
+EXEC dbo.insere_cep_stage;
+GO
+EXEC dbo.insere_livro_stage;
+GO
+EXEC dbo.insere_loja_stage;
+GO
+EXEC dbo.insere_atendente_stage;
+GO
+EXEC dbo.insere_tipo_endereco_stage;
+GO
+EXEC dbo.insere_tipo_desconto_stage;
+GO
+EXEC dbo.insere_tipo_pagamento_stage;
+GO
+EXEC dbo.insere_autor_stage;
+GO
+EXEC dbo.insere_tipos_de_erros_stage;
 
 --====================================================================================
 -- Executa proceadures para inserção das tabelas essenciais do STAGE para o LIVRARIADB
 --====================================================================================
 USE LIVRARIADB;
 
-EXEC dbo.insere_cep_livrariadb_2
-
-EXEC dbo.insere_livro_livrariadb
-
-EXEC dbo.insere_loja_livrariadb
-
-EXEC dbo.insere_atendente_livrariadb
-
-EXEC dbo.insere_tipo_endereco_livrariadb
-
-EXEC dbo.insere_tipo_desconto_livrariadb
-
-EXEC dbo.insere_tipo_pagamento_livrariadb
-
-EXEC dbo.insere_autor_livrariadb
+EXEC dbo.insere_cep_livrariadb;
+GO
+EXEC dbo.insere_livro_livrariadb;
+GO
+EXEC dbo.insere_loja_livrariadb;
+GO
+EXEC dbo.insere_atendente_livrariadb;
+GO
+EXEC dbo.insere_tipo_endereco_livrariadb;
+GO
+EXEC dbo.insere_tipo_desconto_livrariadb;
+GO
+EXEC dbo.insere_tipo_pagamento_livrariadb;
+GO
+EXEC dbo.insere_autor_livrariadb;
 -- ======================================================
 -- Verifica valores inseridos da tabelas essenciais STAGE
 -- ======================================================

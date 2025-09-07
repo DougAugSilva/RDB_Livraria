@@ -21,10 +21,10 @@ BEGIN
 	BEGIN
 
 		IF @nome IS NULL
-				SET @nome = 'não informado';
+				SET @nome = 'nao informado';
 	
 		IF @email IS NULL
-			SET @email = 'não informado';
+			SET @email = 'nao informado';
 	
 		IF NOT EXISTS (SELECT NOME FROM LIVRARIADB.dbo.ATENDENTE WHERE EMAIL = @email)
 				INSERT INTO LIVRARIADB.dbo.ATENDENTE (NOME, TELEFONE, EMAIL, ID_LOJA)

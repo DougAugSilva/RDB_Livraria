@@ -1,0 +1,19 @@
+Tarefas (06/09/2025)
+
+1. Alterar tabela tipo desconto, mudando os valores das colunas MINIMO_DIA, MAXIMO_DIA para INT
+com as durações dos dias. [OK]
+
+2. Alterar tratamento dos dados da coluna CONDICAO_PAGAMENTO_TRATADOS da MOVIMENTACAO_LIVROS_TRATADOS
+de modo a facilitar as joins com a tabela LIVRARIADB.dbo.TIPO_PAGAMENTO. [OK]
+
+3. Consertar tabela CEP de modo a tratar o cep como primary key ao invez do ID_CEP, excluindo assim a 
+coluna ID_CEP e mudando as proceadures necessárias. [OK]
+
+4. Terminar proceadure de tratamento dos dados, inserindo de forma correta as notas rejeitadas por conta
+do Cep invalido na tabela "MOVIMENTACAO_LIVROS_REJEITADOS".
+
+5. Terminar proceadure insere nota fiscal.
+
+6. Terminar proceadure insere Atendente.
+
+7. Terminar proceadure insere Livro Autor.

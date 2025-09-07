@@ -22,10 +22,10 @@ BEGIN
 	BEGIN
 
 		IF @genero IS NULL
-			SET @genero = 'não informado';
+			SET @genero = 'nao informado';
 	
 		IF @autor IS NULL
-			SET @autor = 'não informado';
+			SET @autor = 'nao informado';
 	
 		IF NOT EXISTS (SELECT TITULO FROM LIVRARIADB.dbo.LIVRO WHERE TITULO = @titulo)
 			INSERT INTO LIVRARIADB.dbo.LIVRO (TITULO, GENERO, QUANTIDADE, VALOR)

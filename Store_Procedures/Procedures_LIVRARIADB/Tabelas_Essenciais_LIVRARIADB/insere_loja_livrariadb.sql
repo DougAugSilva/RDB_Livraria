@@ -21,13 +21,13 @@ BEGIN
 	BEGIN
 
 		IF @nome IS NULL
-				SET @nome = 'não informado';
+				SET @nome = 'nao informado';
 	
 		IF @cidade IS NULL
-			SET @cidade = 'não informado';
+			SET @cidade = 'nao informado';
 
 		IF @endereco IS NULL
-			SET @endereco = 'não informado';
+			SET @endereco = 'nao informado';
 	
 		IF NOT EXISTS (SELECT NOME FROM LIVRARIADB.dbo.LOJA WHERE CNPJ = @cnpj)
 				INSERT INTO LIVRARIADB.dbo.LOJA (NOME, CIDADE, ENDERECO, CNPJ)

@@ -83,11 +83,11 @@ GO
 
 CREATE TABLE TIPO_DESCONTO(
     ID_TIPO_DESCONTO            INT                 IDENTITY (1,1),
-    MINIMO_DIA                  DATE                NOT NULL,
-    MAXIMO_DIA                  DATE                NOT NULL,
+    MINIMO_DIA                  INT                 NOT NULL,
+    MAXIMO_DIA                  INT                 NOT NULL,
     PERCENT_MIN                 DECIMAL(10,2)       NOT NULL,
     PERCENT_MAX                 DECIMAL(10,2)       NOT NULL,
-    DESC_DESCONTO               VARCHAR(30)        NOT NULL,
+    DESC_DESCONTO               VARCHAR(30)         NOT NULL,
     DATA_APROVACAO              DATE                NOT NULL,
     APROVADOR                   VARCHAR(50)         NOT NULL,
     TIPO                        VARCHAR(25)         NOT NULL,
@@ -170,5 +170,3 @@ CREATE TABLE TIPO_ENDERECO (
     SIGLA                       VARCHAR(20)     NOT NULL,
     CONSTRAINT PK_TIPO_ENDERECO PRIMARY KEY (ID_TIPO_ENDERECO)
 );
-
-

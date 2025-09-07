@@ -5,7 +5,7 @@ CREATE PROCEDURE dbo.insere_cep_stage
 AS
 BEGIN
 	BULK INSERT CEP
-		FROM 'C:\Arquivos_banco_dados\cep_clientes.csv' 
+		FROM 'C:\Arquivos_banco_dados\cep.csv' 
 		WITH(
 			FIELDTERMINATOR = ';',
 			ROWTERMINATOR = '\n',
