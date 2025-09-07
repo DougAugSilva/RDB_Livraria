@@ -1,11 +1,8 @@
 TIPO,DESCRICAO
-DINHEIRO,Pagamento em espécie
-CARTAO_CREDITO,Cartão de Crédito
-CARTAO_DEBITO,Cartão de Débito
-PIX,Transferência via PIX
-BOLETO,Boleto Bancário
-TRANSFERENCIA,Transferência Bancária
-CHEQUE,Pagamento com Cheque
-VALE_ALIMENTACAO,Vale Alimentação
-VALE_REFEICAO,Vale Refeição
-OUTROS,Outros tipos de pagamento
+A vista,Pagamento a vista
+30 dias,30 dias direto
+30/60 dias,De 30 a 60 dias direto
+30/60/90 dias,De 30 60 a 90 dias direto
+Entrada/30 dias,Entrada e mais 30 dias direto
+Entrada/30/60 dias,Entrada e mais 30 a 60 dias direto
+Entrada/30/60/90 dias,Entrada e mais 30 60 a 90 dias direto

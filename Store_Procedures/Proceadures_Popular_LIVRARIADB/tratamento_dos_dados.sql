@@ -9,13 +9,10 @@ BEGIN
         SELECT NOME_CLIENTE, NUMERO_ENDERECO, COMPLEMENTO, CEP, 
             UPPER(TIPO_ENDERECO), 
             EMAIL_CLIENTE, TELEFONE_CLIENTE, CPF, NUMERO_NOTA_FISCAL, QUANTIDADE, VALOR_ITEM, VALOR_TOTAL, 
-            UPPER(
+            REPLACE(
                 REPLACE(
-                    REPLACE(
-                        REPLACE(CONDICAO_PAGAMENTO, 'Entrada - ','')
-                        , ' ', '')
-                        , '3060', '')
-                        ), 
+                    REPLACE(CONDICAO_PAGAMENTO, 'Entrada - ', 'Entrada/'), 
+                    '30 60 90', '30/60/90'), 'a vista', 'A vista'),
             TITULO, AUTOR, ID_LOJA, ID_ATENDENTE, DATA_VENDA, DATA_PROCESSAMENTO
         FROM STAGE.dbo.MOVIMENTACAO_LIVROS
         --TIPOS DE CONDICOES DE PAGAMENTO ACEITAS
@@ -82,19 +79,16 @@ BEGIN
             DATA_PROCESSAMENTO   DATE           NULL
         );
         --========================================================================
-        -- 1 validação (seleciona as notas não processadas)
+        -- 1 validação (seleciona as notas não processadas) gg
         INSERT INTO 
             ##pegar_notas_nao_processadas
         SELECT NOME_CLIENTE, NUMERO_ENDERECO, COMPLEMENTO, CEP, 
             UPPER(TIPO_ENDERECO), 
             EMAIL_CLIENTE, TELEFONE_CLIENTE, CPF, NUMERO_NOTA_FISCAL, QUANTIDADE, VALOR_ITEM, VALOR_TOTAL, 
-            UPPER(
+            REPLACE(
                 REPLACE(
-                    REPLACE(
-                        REPLACE(CONDICAO_PAGAMENTO, 'Entrada - ','')
-                        , ' ', '')
-                        , '3060', '')
-                        ), 
+                    REPLACE(CONDICAO_PAGAMENTO, 'Entrada - ', 'Entrada/'), 
+                    '30 60 90', '30/60/90'), 'a vista', 'A vista'),
             TITULO, AUTOR, ID_LOJA, ID_ATENDENTE, DATA_VENDA, DATA_PROCESSAMENTO
         FROM 
             STAGE.dbo.MOVIMENTACAO_LIVROS
@@ -229,9 +223,7 @@ SELECT * FROM MOVIMENTACAO_LIVROS;
 SELECT * FROM MOVIMENTACAO_LIVROS_REJEITADOS 
 --LEFT JOIN TIPO_DE_ERRO ON MOVIMENTACAO_LIVROS_REJEITADOS.ID_ERRO = TIPO_DE_ERRO.ID_ERRO;
 
-SELECT * 
-FROM MOVIMENTACAO_LIVROS_TRATADOS AS TRA
-JOIN LIVRARIADB.dbo.CEP AS LCEP ON TRA.CEP_TRATADOS = LCEP.CEP;
+SELECT * FROM MOVIMENTACAO_LIVROS_TRATADOS;
 
 SELECT * FROM VALIDACAO;
 
