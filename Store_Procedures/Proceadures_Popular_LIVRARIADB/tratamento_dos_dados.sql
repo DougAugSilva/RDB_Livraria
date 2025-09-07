@@ -1,7 +1,7 @@
 USE STAGE;
 GO 
 
-ALTER PROCEDURE dbo.tratamento_dados_2
+ALTER PROCEDURE dbo.tratamento_dados
 AS
 BEGIN
 
@@ -176,7 +176,7 @@ BEGIN
             END
         END
         --========================================================================
-        -- 3 validação (seleciona as notas com ceps na tabeela CEP da LIVRARIADB)
+        -- 3 validação (seleciona as notas com ceps na tabela CEP da LIVRARIADB)
         SELECT *
         INTO 
             #seleciona_cep
@@ -187,7 +187,7 @@ BEGIN
                 SELECT NUMERO_NOTA_FISCAL 
                 FROM ##pegar_notas_datas_certas 
                 WHERE VERIFICADOS = 'REJEITADO')
-                AND @cep IN (SELECT CEP FROM STAGE.dbo.CEP) -- Erro por conta de a tabela cep do LIVRARIADB estar incompleta
+                AND @cep IN (SELECT CEP FROM LIVRARIADB.dbo.CEP)
 
         INSERT INTO STAGE.dbo.MOVIMENTACAO_LIVROS_TRATADOS
         SELECT *
@@ -218,7 +218,7 @@ END;
 EXEC dbo.insere_csv_movimentacao_livros_stage;
 
 -- INSERE NAS TABELAS MOVIMENTACAO TRATAODS OU REJEITADOS
-EXEC dbo.tratamento_dados_2;
+EXEC dbo.tratamento_dados;
 
 -- CARREGA NA VALIDACAO QUAIS NOTAS ESTÃO NA TABELA MOVIMENTACAO TRATADOS
 EXEC dbo.carregar_validacao;
@@ -229,7 +229,9 @@ SELECT * FROM MOVIMENTACAO_LIVROS;
 SELECT * FROM MOVIMENTACAO_LIVROS_REJEITADOS 
 --LEFT JOIN TIPO_DE_ERRO ON MOVIMENTACAO_LIVROS_REJEITADOS.ID_ERRO = TIPO_DE_ERRO.ID_ERRO;
 
-SELECT * FROM MOVIMENTACAO_LIVROS_TRATADOS;
+SELECT * 
+FROM MOVIMENTACAO_LIVROS_TRATADOS AS TRA
+JOIN LIVRARIADB.dbo.CEP AS LCEP ON TRA.CEP_TRATADOS = LCEP.CEP;
 
 SELECT * FROM VALIDACAO;
 

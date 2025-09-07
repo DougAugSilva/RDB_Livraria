@@ -1,3 +1,5 @@
+USE LIVRARIADB;
+GO
 CREATE PROCEDURE dbo.insere_cep_livrariadb
 AS
 BEGIN
@@ -42,7 +44,7 @@ END;
 
 USE LIVRARIADB;
 GO
-CREATE PROCEDURE dbo.insere_cep_livrariadb_2
+ALTER PROCEDURE dbo.insere_cep_livrariadb_2
 AS
 BEGIN
 	INSERT INTO LIVRARIADB.dbo.CEP

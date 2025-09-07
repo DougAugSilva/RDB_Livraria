@@ -54,8 +54,8 @@ CREATE TABLE LOJA(
 GO
 
 CREATE TABLE TIPO_DESCONTO(
-    MINIMO_DIA         DATE                NULL,
-    MAXIMO_DIA         DATE                NULL,
+    MINIMO_DIA         INT                NULL,
+    MAXIMO_DIA         INT                NULL,
     PERCENT_MIN        DECIMAL(10,2)       NULL,
     PERCENT_MAX        DECIMAL(10,2)       NULL,
     DESC_DESCONTO      VARCHAR(30)         NULL,
