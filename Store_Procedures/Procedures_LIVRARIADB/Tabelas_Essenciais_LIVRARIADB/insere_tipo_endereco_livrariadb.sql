@@ -19,10 +19,10 @@ BEGIN
 	BEGIN
 
 		IF @descricao IS NULL
-			SET @descricao = 'não informado';
+			SET @descricao = 'nao informado';
 		
 		IF @sigla IS NULL
-			SET @sigla = 'não informado';
+			SET @sigla = 'nao informado';
 		
 		IF NOT EXISTS (SELECT SIGLA FROM LIVRARIADB.dbo.TIPO_ENDERECO WHERE SIGLA = @sigla)
 			INSERT INTO LIVRARIADB.dbo.TIPO_ENDERECO (DESCRICAO, SIGLA)

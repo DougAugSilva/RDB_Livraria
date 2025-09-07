@@ -18,10 +18,10 @@ BEGIN
 	BEGIN
 
 		IF @tipos IS NULL
-			SET @tipos = 'não informado';
+			SET @tipos = 'nao informado';
 
 		IF @descricao IS NULL
-			SET @descricao = 'não informado';
+			SET @descricao = 'nao informado';
 		
 		INSERT INTO LIVRARIADB.dbo.TIPO_PAGAMENTO (TIPO, DESCRICAO)
 		VALUES (@tipos, @descricao)

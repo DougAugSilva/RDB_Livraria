@@ -8,8 +8,8 @@ BEGIN
 		SELECT MINIMO_DIA, MAXIMO_DIA, PERCENT_MIN, PERCENT_MAX, DESC_DESCONTO, DATA_APROVACAO, APROVADOR, TIPO, ESTATUS
 		FROM STAGE.dbo.TIPO_DESCONTO
 	
-	DECLARE @minimo_dia		DATE;
-	DECLARE @maximo_dia		DATE;
+	DECLARE @minimo_dia		INT;
+	DECLARE @maximo_dia		INT;
 	DECLARE @percent_min	DECIMAL(10,2);
 	DECLARE @percent_max	DECIMAL(10,2);
 	DECLARE @desc_desconto	VARCHAR(30);
@@ -25,16 +25,16 @@ BEGIN
 	BEGIN
 
 		IF @desc_desconto IS NULL
-				SET @desc_desconto = 'não informado';
+				SET @desc_desconto = 'nao informado';
 
 		IF @aprovador IS NULL
-				SET @aprovador = 'não informado';
+				SET @aprovador = 'nao informado';
 	
 		IF @tipo IS NULL
-				SET @tipo = 'não informado';
+				SET @tipo = 'nao informado';
 	
 		IF @estatus IS NULL
-				SET @estatus = 'não informado';
+				SET @estatus = 'nao informado';
 
 		INSERT INTO LIVRARIADB.dbo.TIPO_DESCONTO (MINIMO_DIA, MAXIMO_DIA, PERCENT_MIN, PERCENT_MAX, DESC_DESCONTO, DATA_APROVACAO, APROVADOR, TIPO, ESTATUS)
 		VALUES (@minimo_dia, @maximo_dia, @percent_min, @percent_max, @desc_desconto, @data_aprovacao, @aprovador, @tipo, @estatus)

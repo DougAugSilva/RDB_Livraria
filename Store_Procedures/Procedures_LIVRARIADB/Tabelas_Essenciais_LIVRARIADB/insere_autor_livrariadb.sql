@@ -17,7 +17,7 @@ BEGIN
 	BEGIN
 
 		IF @nome IS NULL
-			SET @nome = 'não informado';
+			SET @nome = 'nao informado';
 		
 		INSERT INTO LIVRARIADB.dbo.AUTOR (NOME)
 		VALUES (@nome)
