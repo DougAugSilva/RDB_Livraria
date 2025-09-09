@@ -17,3 +17,5 @@ BEGIN
 END
 
 EXEC dbo.carregar_validacao;
+
+-- OK

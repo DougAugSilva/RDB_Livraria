@@ -41,3 +41,47 @@ CREATE TABLE MOVIMENTACAO_LIVROS_TRATADOS (
     DATA_VENDA_TRATADOS           DATE           NULL,
     DATA_PROCESSAMENTO_TRATADOS   DATE           NULL
 );
+
+-- =======================================================================
+-- TESTANDO PROCEADURE DE TRATAMENTO =====================================
+
+-- INSERE DADOS BRUTOS NO MOVIEMNTACAO_LIVROS DO STAGE
+EXEC dbo.insere_csv_movimentacao_livros_stage;
+
+-- INSERE NAS TABELAS MOVIMENTACAO TRATAODS OU REJEITADOS
+EXEC dbo.tratamento_dados;
+
+-- CARREGA NA VALIDACAO QUAIS NOTAS ESTÃO NA TABELA MOVIMENTACAO TRATADOS
+EXEC dbo.carregar_validacao;
+
+
+SELECT * FROM MOVIMENTACAO_LIVROS;
+
+SELECT * FROM MOVIMENTACAO_LIVROS_REJEITADOS 
+--LEFT JOIN TIPO_DE_ERRO ON MOVIMENTACAO_LIVROS_REJEITADOS.ID_ERRO = TIPO_DE_ERRO.ID_ERRO;
+
+SELECT * FROM MOVIMENTACAO_LIVROS_TRATADOS;
+
+SELECT * FROM VALIDACAO;
+
+--================================
+DELETE FROM MOVIMENTACAO_LIVROS;
+GO
+
+DELETE FROM MOVIMENTACAO_LIVROS_REJEITADOS;
+GO
+
+DELETE FROM  VALIDACAO;
+GO
+
+DELETE FROM  MOVIMENTACAO_LIVROS_TRATADOS;
+
+-- livro e livro autor já no banco
+-- tratar os dados do tipo pagamento para JOINS
+-- alterar modelagem de dados com tabela de erros (tabela com Id do erro e descrição do erro)
+SELECT TOP 10 * FROM LIVRARIADB.dbo.CEP;
+
+-- erro por conta da tabelas dos ceps na LIVRARIADB estar inconpleta      
+Select count(*) from LIVRARIADB.dbo.CEP AS Quant_ceps_LIVRARIADB; 
+
+select count(*) from STAGE.dbo.CEP AS Quant_ceps_STAGE;
