@@ -1,5 +1,7 @@
-Tarefas (06/09/2025)
+Tarefas
 
+-- Feitas
+--------
 1. Alterar tabela tipo desconto, mudando os valores das colunas MINIMO_DIA, MAXIMO_DIA para INT
 com as durações dos dias. [OK]
 
@@ -10,10 +12,14 @@ de modo a facilitar as joins com a tabela LIVRARIADB.dbo.TIPO_PAGAMENTO. [OK]
 coluna ID_CEP e mudando as proceadures necessárias. [OK]
 
 4. Terminar proceadure de tratamento dos dados, inserindo de forma correta as notas rejeitadas por conta
-do Cep invalido na tabela "MOVIMENTACAO_LIVROS_REJEITADOS".
+do Cep invalido na tabela "MOVIMENTACAO_LIVROS_REJEITADOS". [OK]
 
-5. Terminar proceadure insere nota fiscal.
+5. Terminar proceadure insere endereco cliente.
 
-6. Terminar proceadure insere Atendente.
+-- Terminar
+---------
+6. Terminar proceadure insere nota fiscal.
 
-7. Terminar proceadure insere Livro Autor.
+7. Terminar proceadure insere Atendente.
+
+8. Terminar proceadure insere Livro Autor.
