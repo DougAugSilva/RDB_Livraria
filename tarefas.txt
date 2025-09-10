@@ -16,8 +16,6 @@ do Cep invalido na tabela "MOVIMENTACAO_LIVROS_REJEITADOS". [OK]
 
 5. Terminar proceadure insere endereco cliente.
 
--- Terminar
----------
 6. Terminar proceadure insere nota fiscal.
 
 7. Terminar proceadure insere Atendente.

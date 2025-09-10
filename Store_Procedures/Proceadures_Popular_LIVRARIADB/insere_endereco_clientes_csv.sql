@@ -45,3 +45,5 @@ BEGIN
 END
 
 EXEC dbo.insere_endereco_livrariadb;
+
+-- OK

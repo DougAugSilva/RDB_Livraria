@@ -1,7 +1,7 @@
 USE STAGE;
 GO 
 
-CREATE PROCEDURE dbo.tratamento_dados
+ALTER PROCEDURE dbo.tratamento_dados
 AS
 BEGIN
 
@@ -13,7 +13,11 @@ BEGIN
                 REPLACE(
                     REPLACE(CONDICAO_PAGAMENTO, 'Entrada - ', 'Entrada/'), 
                     '30 60 90', '30/60/90'), 'a vista', 'A vista'),
-            TITULO, AUTOR, ID_LOJA, ID_ATENDENTE, DATA_VENDA, DATA_PROCESSAMENTO
+            TITULO, 
+            REPLACE(
+                REPLACE(AUTOR, 'Aluísio Azevedo', 'Aluizio Azevedo'),
+                 'Jenny Han - Siobhan Vivian', 'Jenny Han'),
+            ID_LOJA, ID_ATENDENTE, DATA_VENDA, DATA_PROCESSAMENTO
         FROM STAGE.dbo.MOVIMENTACAO_LIVROS
     
     DECLARE @nome_cliente       NVARCHAR(100);
@@ -84,7 +88,11 @@ BEGIN
                 REPLACE(
                     REPLACE(CONDICAO_PAGAMENTO, 'Entrada - ', 'Entrada/'), 
                     '30 60 90', '30/60/90'), 'a vista', 'A vista'),
-            TITULO, AUTOR, ID_LOJA, ID_ATENDENTE, DATA_VENDA, DATA_PROCESSAMENTO
+            TITULO, 
+            REPLACE(
+                REPLACE(AUTOR, 'Aluísio Azevedo', 'Aluizio Azevedo'), 
+                'Jenny Han - Siobhan Vivian', 'Jenny Han'),
+            ID_LOJA, ID_ATENDENTE, DATA_VENDA, DATA_PROCESSAMENTO
         FROM 
             STAGE.dbo.MOVIMENTACAO_LIVROS
         WHERE NOT EXISTS (
