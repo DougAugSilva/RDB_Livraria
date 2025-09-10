@@ -34,3 +34,5 @@ BEGIN
 END
 
 EXEC dbo.insere_cliente_livrariadb;
+
+-- OK

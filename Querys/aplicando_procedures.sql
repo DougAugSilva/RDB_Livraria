@@ -46,9 +46,26 @@ GO
 EXEC dbo.insere_tipo_pagamento_livrariadb;
 GO
 EXEC dbo.insere_autor_livrariadb;
--- ======================================================
--- Verifica valores inseridos da tabelas essenciais STAGE
--- ======================================================
+--============================================================================
+-- Executa proceadures que populam o LIVRARIADB pelo STAGE com dados das notas
+--============================================================================
+USE LIVRARIADB;
+
+EXEC dbo.tratamento_dados;
+GO
+EXEC dbo.carregar_validacao;
+GO
+EXEC dbo.insere_cliente_livrariadb;
+GO
+EXEC dbo.insere_endereco_livrariadb;
+GO
+EXEC dbo.insere_nota_fiscal;
+GO
+EXEC dbo.insere_livroautor_livrariadb;
+
+-- =======================================================
+-- Verifica valores inseridos nas tabelas essenciais STAGE
+-- =======================================================
 USE STAGE;
 
 -- dbo.insere_cep_stage
@@ -78,9 +95,9 @@ SELECT * FROM AUTOR;
 -- dbo.insere_tipos_de_erros_stage
 SELECT * FROM TIPO_DE_ERRO;
 
--- ===========================================================
--- Verifica valores inseridos da tabelas essenciais LIVRARIADB
--- ===========================================================
+-- ============================================================
+-- Verifica valores inseridos nas tabelas essenciais LIVRARIADB
+-- ============================================================
 USE LIVRARIADB;
 
 -- dbo.insere_cep_livrariadb
@@ -106,3 +123,28 @@ SELECT * FROM TIPO_PAGAMENTO;
 
 -- dbo.insere_autor_livrariadb
 SELECT * FROM AUTOR;
+
+-- ===================================================================
+-- Verifica valores inseridos pelas procedures de popular o LIVRARIADB
+-- ===================================================================
+USE LIVRARIADB;
+
+-- dbo.tratamento_dados
+SELECT * FROM STAGE.dbo.MOVIMENTACAO_LIVROS;
+SELECT * FROM STAGE.dbo.MOVIMENTACAO_LIVROS_TRATADOS;
+SELECT * FROM STAGE.dbo.MOVIMENTACAO_LIVROS_REJEITADOS;
+
+-- dbo.carregar_validacao
+SELECT * FROM STAGE.dbo.VALIDACAO;
+
+-- dbo.insere_cliente_livrariadb
+SELECT * FROM CLIENTE;
+
+-- dbo.insere_endereco_livrariadb
+SELECT * FROM ENDERECOS_CLIENTES;
+
+-- dbo.insere_nota_fiscal
+SELECT * FROM NOTA_FISCAL;
+
+-- dbo.insere_livroautor_livrariadb
+SELECT * FROM LIVRO_AUTOR;
