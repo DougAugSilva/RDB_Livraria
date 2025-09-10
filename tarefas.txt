@@ -14,10 +14,12 @@ coluna ID_CEP e mudando as proceadures necessárias. [OK]
 4. Terminar proceadure de tratamento dos dados, inserindo de forma correta as notas rejeitadas por conta
 do Cep invalido na tabela "MOVIMENTACAO_LIVROS_REJEITADOS". [OK]
 
+5. Terminar proceadure insere endereco cliente.
+
 -- Terminar
 ---------
-5. Terminar proceadure insere nota fiscal.
+6. Terminar proceadure insere nota fiscal.
 
-6. Terminar proceadure insere Atendente.
+7. Terminar proceadure insere Atendente.
 
-7. Terminar proceadure insere Livro Autor.
+8. Terminar proceadure insere Livro Autor.

@@ -1,7 +1,7 @@
 USE STAGE
 GO
 
-ALTER PROCEDURE dbo.carregar_validacao
+CREATE PROCEDURE dbo.carregar_validacao
 AS
 BEGIN
 
