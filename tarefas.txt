@@ -1,23 +1,58 @@
 Tarefas
 
--- Feitas
---------
-1. Alterar tabela tipo desconto, mudando os valores das colunas MINIMO_DIA, MAXIMO_DIA para INT
-com as durações dos dias. [OK]
+1. Alterar create do modelo de banco de dados LIVRARIADB para ficar condizente
+com o modelo teorico presente no .jpeg do repositório.
 
-2. Alterar tratamento dos dados da coluna CONDICAO_PAGAMENTO_TRATADOS da MOVIMENTACAO_LIVROS_TRATADOS
-de modo a facilitar as joins com a tabela LIVRARIADB.dbo.TIPO_PAGAMENTO. [OK]
+2. Alterar proceadures para se adequqarem as novas tabelas, as modificações
+nas tabelas criaramtambém uma ligação direta eentre as tabelas 
+LIVRARIADB.dbo.NOTA_FISCAL e LIVRARIADB.dbo.ITEM_VENDA.
 
-3. Consertar tabela CEP de modo a tratar o cep como primary key ao invez do ID_CEP, excluindo assim a 
-coluna ID_CEP e mudando as proceadures necessárias. [OK]
+-- Rascunhos reunião de 13/09/25
 
-4. Terminar proceadure de tratamento dos dados, inserindo de forma correta as notas rejeitadas por conta
-do Cep invalido na tabela "MOVIMENTACAO_LIVROS_REJEITADOS". [OK]
+USE LIVRARIADB;
+GO
 
-5. Terminar proceadure insere endereco cliente.
+CREATE TABLE NOTA_FISCAL(
+    ID_NF                       INT                             IDENTITY (1,1),
+    ID_TIPO_PAGAMENTO           INT                             NOT NULL,
+    ID_CLIENTE                  INT                             NOT NULL,
+    DATA_NOTA                   DATE                            NOT NULL,
+    NUMERO_NOTA_FISCAL          INT                             NULL,
+    CONSTRAINT PK_DATA_NOTA     PRIMARY KEY (ID_NF),
+    CONSTRAINT FK_TIPO_DESCONTO FOREIGN KEY (ID_TIPO_PAGAMENTO) REFERENCES TIPO_PAGAMENTO(ID_TIPO_PAGAMENTO),
+    CONSTRAINT FK_CLIENTE       FOREIGN KEY (ID_CLIENTE)        REFERENCES CLIENTE(ID_CLIENTE)
+);
+GO
 
-6. Terminar proceadure insere nota fiscal.
 
-7. Terminar proceadure insere Atendente.
+CREATE TABLE ITEM_VENDA(
+    ID_VENDA                INT IDENTITY (1,1),
+    ID_LIVRO                INT NOT NULL,
+    QUANTIDADE              INT NOT NULL,
+    CONSTRAINT PK_VENDA     PRIMARY KEY (ID_VENDA),
+    CONSTRAINT FK_LIVRO_2   FOREIGN KEY (ID_LIVRO) REFERENCES LIVRO(ID_LIVRO)
+);
+GO
 
-8. Terminar proceadure insere Livro Autor.
+-- ID_ATENDENTE
+-- ID_ITEM_VENDA
+
+
+ ALTER TABLE LIVRARIADB.dbo.ITEM_VENDA
+ ADD ID_NF INT NOT NULL,
+ CONSTRAINT FK_ID_NF FOREIGN KEY (ID_NF) REFERENCES NOTA_FISCAL(ID_NF)
+ ;
+
+ DELETE FROM LIVRARIADB.dbo.NOTA_FISCAL;
+
+ ALTER TABLE LIVRARIADB.dbo.NOTA_FISCAL
+ ADD ID_VENDA INT NOT NULL, ID_ATENDENTE INT NOT NULL,
+ CONSTRAINT FK_ID_ITEM_VENDA FOREIGN KEY (ID_VENDA) REFERENCES ITEM_VENDA(ID_VENDA),
+ CONSTRAINT FK_ID_ATENDENTE FOREIGN KEY (ID_ATENDENTE) REFERENCES ATENDENTE(ID_ATENDENTE)
+ ;
+
+GO
+sp_help ITEM_VENDA
+
+GO
+sp_help NOTA_FISCAL
