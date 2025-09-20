@@ -10,7 +10,8 @@ As procedures possuem uma ordem de exewcução específica, dados que algumas ut
 - `EXEC dbo.carregar_validacao; ->`
 - `EXEC dbo.insere_cliente_livrariadb; ->`
 - `EXEC dbo.insere_endereco_livrariadb; ->`
-- `EXEC dbo.insere_nota_fiscal; ->`
+- `EXEC dbo.insere_item_venda_livrariadb; ->` -- novo
+- `EXEC dbo.insere_nota_fiscal_livrariadb; ->`
 - `EXEC dbo.insere_livroautor_livrariadb; ->`
 
 

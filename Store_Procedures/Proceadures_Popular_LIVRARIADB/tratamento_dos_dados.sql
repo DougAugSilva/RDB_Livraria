@@ -1,7 +1,7 @@
 USE STAGE;
 GO 
 
-ALTER PROCEDURE dbo.tratamento_dados
+CREATE PROCEDURE dbo.tratamento_dados
 AS
 BEGIN
 

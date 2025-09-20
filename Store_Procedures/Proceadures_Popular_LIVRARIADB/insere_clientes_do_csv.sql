@@ -32,7 +32,4 @@ BEGIN
 			Origem.EMAIL_CLIENTE_TRATADOS
 		);
 END
-
-EXEC dbo.insere_cliente_livrariadb;
-
 -- OK

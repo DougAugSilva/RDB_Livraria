@@ -32,6 +32,4 @@ BEGIN
         );
 END
 
-EXEC dbo.insere_livroautor_livrariadb;
-
 -- OK

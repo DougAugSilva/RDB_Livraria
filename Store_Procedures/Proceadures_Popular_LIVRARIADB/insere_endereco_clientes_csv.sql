@@ -43,7 +43,4 @@ BEGIN
 			Origem.COMPLEMENTO_TRATADOS
 		);
 END
-
-EXEC dbo.insere_endereco_livrariadb;
-
 -- OK

@@ -1,58 +1,42 @@
+Atualizações 20/09/2025
+
+-- alterei tabela NOTA_FISCAL para conter coluna VALOR_NF (alterar no diagrama e no banco).
+-- alterei a proceadure de inserlçao da nota fiscal, para o cálculo automático do valor da nota.
+-- alterei tabela TIPO_PAGAMENTO para conter quanrtidade das parcelas refrente a cada tipo.
+============================================================================
+Querys utilizadas 
+
+-------------------------------------------------------
+-- alteração da tabela nota fiscal para inserção dos vallores da venda
+-- esta inserção multiplica a quantidade do item pelo valor do item.
+
+ALTER TABLE LIVRARIADB.dbo.TIPO_PAGAMENTO
+ADD NUMERO_PARCELAS INT;
+
+UPDATE LIVRARIADB.dbo.TIPO_PAGAMENTO
+SET NUMERO_PARCELAS = 
+    CASE 
+        WHEN TIPO = 'A vista' THEN 1
+        WHEN TIPO = '30 dias' THEN 1
+        WHEN TIPO = '30/60 dias' THEN 2
+        WHEN TIPO = '30/60/90 dias' THEN 3
+        WHEN TIPO = 'Entrada/30 dias' THEN 2
+        WHEN TIPO = 'Entrada/30/60 dias' THEN 3
+        WHEN TIPO = 'Entrada/30/60/90 dias' THEN 4
+        ELSE 1 
+    END;
+=======================================================================
 Tarefas
+[1]
+-- Alteraar código de criação dio banco de dados LIVRARIADB para comportar as novas mudanças feitas no
+-- LIVRARIADB e as mudanças nas tabelas NOTA_FISCAL E TIPO_PAGAMENTO.
 
-1. Alterar create do modelo de banco de dados LIVRARIADB para ficar condizente
-com o modelo teorico presente no .jpeg do repositório.
+[2]
+-- Alterar diagrama (modelo teórico) do banco de dados depouis de mudar o código.
 
-2. Alterar proceadures para se adequqarem as novas tabelas, as modificações
-nas tabelas criaramtambém uma ligação direta eentre as tabelas 
-LIVRARIADB.dbo.NOTA_FISCAL e LIVRARIADB.dbo.ITEM_VENDA.
-
--- Rascunhos reunião de 13/09/25
-
-USE LIVRARIADB;
-GO
-
-CREATE TABLE NOTA_FISCAL(
-    ID_NF                       INT                             IDENTITY (1,1),
-    ID_TIPO_PAGAMENTO           INT                             NOT NULL,
-    ID_CLIENTE                  INT                             NOT NULL,
-    DATA_NOTA                   DATE                            NOT NULL,
-    NUMERO_NOTA_FISCAL          INT                             NULL,
-    CONSTRAINT PK_DATA_NOTA     PRIMARY KEY (ID_NF),
-    CONSTRAINT FK_TIPO_DESCONTO FOREIGN KEY (ID_TIPO_PAGAMENTO) REFERENCES TIPO_PAGAMENTO(ID_TIPO_PAGAMENTO),
-    CONSTRAINT FK_CLIENTE       FOREIGN KEY (ID_CLIENTE)        REFERENCES CLIENTE(ID_CLIENTE)
-);
-GO
-
-
-CREATE TABLE ITEM_VENDA(
-    ID_VENDA                INT IDENTITY (1,1),
-    ID_LIVRO                INT NOT NULL,
-    QUANTIDADE              INT NOT NULL,
-    CONSTRAINT PK_VENDA     PRIMARY KEY (ID_VENDA),
-    CONSTRAINT FK_LIVRO_2   FOREIGN KEY (ID_LIVRO) REFERENCES LIVRO(ID_LIVRO)
-);
-GO
-
--- ID_ATENDENTE
--- ID_ITEM_VENDA
-
-
- ALTER TABLE LIVRARIADB.dbo.ITEM_VENDA
- ADD ID_NF INT NOT NULL,
- CONSTRAINT FK_ID_NF FOREIGN KEY (ID_NF) REFERENCES NOTA_FISCAL(ID_NF)
- ;
-
- DELETE FROM LIVRARIADB.dbo.NOTA_FISCAL;
-
- ALTER TABLE LIVRARIADB.dbo.NOTA_FISCAL
- ADD ID_VENDA INT NOT NULL, ID_ATENDENTE INT NOT NULL,
- CONSTRAINT FK_ID_ITEM_VENDA FOREIGN KEY (ID_VENDA) REFERENCES ITEM_VENDA(ID_VENDA),
- CONSTRAINT FK_ID_ATENDENTE FOREIGN KEY (ID_ATENDENTE) REFERENCES ATENDENTE(ID_ATENDENTE)
- ;
-
-GO
-sp_help ITEM_VENDA
-
-GO
-sp_help NOTA_FISCAL
+[3]
+-- preencher a tabela  PROG_RECEBIMENTO com base na nota fiscal, agora a tabela pago é 0, 
+-- depois somente a coluna PAGO será alterada, com base em um csv que atualiza os itens pagos.
+-- A proceadure de povoamento da tabela PROG_RECEBIMENTO deve conter um laço insere o itnes 
+-- condoem o numero de parcelas, por exemplo, uma nota em 3 pareclas deverá ter seu valor total
+-- dividido por 3 e inserido em 3 parcelas distinastas, com 3 datas de vencimento distintas.
