@@ -1,8 +1,8 @@
-TIPO,DESCRICAO
-A vista,Pagamento a vista
-30 dias,30 dias direto
-30/60 dias,De 30 a 60 dias direto
-30/60/90 dias,De 30 60 a 90 dias direto
-Entrada/30 dias,Entrada e mais 30 dias direto
-Entrada/30/60 dias,Entrada e mais 30 a 60 dias direto
-Entrada/30/60/90 dias,Entrada e mais 30 60 a 90 dias direto
+TIPO,DESCRICAO,NUMERO_PARCELAS
+A vista,Pagamento a vista,1
+30 dias,30 dias direto,1
+30/60 dias,De 30 a 60 dias direto,2
+30/60/90 dias,De 30 60 a 90 dias direto,3
+Entrada/30 dias,Entrada e mais 30 dias direto,2
+Entrada/30/60 dias,Entrada e mais 30 a 60 dias direto,3
+Entrada/30/60/90 dias,Entrada e mais 30 60 a 90 dias direto,4

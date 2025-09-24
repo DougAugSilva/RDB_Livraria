@@ -29,7 +29,7 @@ SET NUMERO_PARCELAS =
 Tarefas
 [1]
 -- Alteraar código de criação dio banco de dados LIVRARIADB para comportar as novas mudanças feitas no
--- LIVRARIADB e as mudanças nas tabelas NOTA_FISCAL E TIPO_PAGAMENTO.
+-- LIVRARIADB e as mudanças nas tabelas NOTA_FISCAL E TIPO_PAGAMENTO. [OK]
 
 [2]
 -- Alterar diagrama (modelo teórico) do banco de dados depouis de mudar o código.
