@@ -43,6 +43,7 @@ CREATE TABLE TIPO_PAGAMENTO(
     ID_TIPO_PAGAMENTO               INT             IDENTITY (1,1),
     TIPO                            VARCHAR(25)     NOT NULL,
     DESCRICAO                       VARCHAR(100)    NOT NULL,
+    NUMERO_PARCELAS                 INT             NOT NULL,
     CONSTRAINT PK_TIPO_PAGAMENTO    PRIMARY KEY (ID_TIPO_PAGAMENTO)
 );
 GO
@@ -56,16 +57,41 @@ CREATE TABLE CLIENTE(
     CONSTRAINT PK_CLIENTE   PRIMARY KEY (ID_CLIENTE)
 );
 GO
+CREATE TABLE LOJA(
+    ID_LOJA             INT             IDENTITY (1,1),
+    NOME                VARCHAR(50)     NOT NULL,
+    CIDADE              VARCHAR(25)     NOT NULL,
+    ENDERECO            VARCHAR(100)    NOT NULL,
+    CNPJ                BIGINT          NOT NULL,
+    CONSTRAINT PK_LOJA  PRIMARY KEY (ID_LOJA)
+);
+GO
+-- OK
+CREATE TABLE ATENDENTE(
+    ID_ATENDENTE            INT                     IDENTITY (1,1),
+    NOME                    VARCHAR(50)             NOT NULL,
+    TELEFONE                BIGINT                  NOT NULL,
+    EMAIL                   VARCHAR(50)             NOT NULL,
+    ID_LOJA                 INT                     NOT NULL,
+    CONSTRAINT PK_ATENDENTE PRIMARY KEY (ID_ATENDENTE),
+    CONSTRAINT FK_LOJA      FOREIGN KEY (ID_LOJA)   REFERENCES LOJA(ID_LOJA)
+);
+GO
 
 CREATE TABLE NOTA_FISCAL(
     ID_NF                       INT                             IDENTITY (1,1),
     ID_TIPO_PAGAMENTO           INT                             NOT NULL,
     ID_CLIENTE                  INT                             NOT NULL,
+    ID_VENDA                    INT                             NOT NULL,
+    ID_ATENDENTE                INT                             NOT NULL,
     DATA_NOTA                   DATE                            NOT NULL,
-    NUMERO_NOTA_FISCAL          INT                             NULL,
+    NUMERO_NOTA_FISCAL          INT                             NOT NULL,
+    VALOR_NF                    DECIMAL(10,2)                   NOT NULL,
     CONSTRAINT PK_DATA_NOTA     PRIMARY KEY (ID_NF),
     CONSTRAINT FK_TIPO_DESCONTO FOREIGN KEY (ID_TIPO_PAGAMENTO) REFERENCES TIPO_PAGAMENTO(ID_TIPO_PAGAMENTO),
-    CONSTRAINT FK_CLIENTE       FOREIGN KEY (ID_CLIENTE)        REFERENCES CLIENTE(ID_CLIENTE)
+    CONSTRAINT FK_CLIENTE       FOREIGN KEY (ID_CLIENTE)        REFERENCES CLIENTE(ID_CLIENTE),
+    CONSTRAINT FK_ID_ITEM_VENDA FOREIGN KEY (ID_VENDA) REFERENCES ITEM_VENDA(ID_VENDA),
+    CONSTRAINT FK_ID_ATENDENTE  FOREIGN KEY (ID_ATENDENTE) REFERENCES ATENDENTE(ID_ATENDENTE)
 );
 GO
 
@@ -119,27 +145,6 @@ CREATE TABLE HISTORICO_RECEBIMENTO(
     CONSTRAINT PK_H_RECEBIMENTO     PRIMARY KEY (ID_H_RECEBIMENTO),
     CONSTRAINT FK_RECEBIMENTO       FOREIGN KEY (ID_PROG_RECEBIMENTO)   REFERENCES PROG_RECEBIMENTO(ID_PROG_RECEBIMENTO),
     CONSTRAINT FK_TIPO_DESCONTO_HR  FOREIGN KEY (ID_TIPO_DESCONTO)      REFERENCES TIPO_DESCONTO(ID_TIPO_DESCONTO)
-);
-GO
-
-CREATE TABLE LOJA(
-    ID_LOJA             INT             IDENTITY (1,1),
-    NOME                VARCHAR(50)     NOT NULL,
-    CIDADE              VARCHAR(25)     NOT NULL,
-    ENDERECO            VARCHAR(100)    NOT NULL,
-    CNPJ                BIGINT          NOT NULL,
-    CONSTRAINT PK_LOJA  PRIMARY KEY (ID_LOJA)
-);
-GO
-
-CREATE TABLE ATENDENTE(
-    ID_ATENDENTE            INT                     IDENTITY (1,1),
-    NOME                    VARCHAR(50)             NOT NULL,
-    TELEFONE                BIGINT                  NOT NULL,
-    EMAIL                   VARCHAR(50)             NOT NULL,
-    ID_LOJA                 INT                     NOT NULL,
-    CONSTRAINT PK_ATENDENTE PRIMARY KEY (ID_ATENDENTE),
-    CONSTRAINT FK_LOJA      FOREIGN KEY (ID_LOJA)   REFERENCES LOJA(ID_LOJA)
 );
 GO
 
