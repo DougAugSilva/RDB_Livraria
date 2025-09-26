@@ -1,7 +1,7 @@
 USE LIVRARIADB;
 GO
 
-CREATE PROCEDURE dbo.insere_atendente_livrariadb
+CREATE OR ALTER PROCEDURE dbo.insere_atendente_livrariadb
 AS
 BEGIN
 

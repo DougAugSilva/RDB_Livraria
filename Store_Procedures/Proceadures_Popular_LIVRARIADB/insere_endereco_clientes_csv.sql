@@ -1,7 +1,7 @@
 USE LIVRARIADB;
 GO
 
-CREATE PROCEDURE dbo.insere_endereco_livrariadb
+CREATE OR ALTER PROCEDURE dbo.insere_endereco_livrariadb
 AS
 BEGIN
 	MERGE LIVRARIADB.dbo.ENDERECOS_CLIENTES Destino

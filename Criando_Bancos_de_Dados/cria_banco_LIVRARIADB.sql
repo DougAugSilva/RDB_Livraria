@@ -66,7 +66,7 @@ CREATE TABLE LOJA(
     CONSTRAINT PK_LOJA  PRIMARY KEY (ID_LOJA)
 );
 GO
--- OK
+
 CREATE TABLE ATENDENTE(
     ID_ATENDENTE            INT                     IDENTITY (1,1),
     NOME                    VARCHAR(50)             NOT NULL,
