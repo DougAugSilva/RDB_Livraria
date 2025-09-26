@@ -1,7 +1,7 @@
 USE STAGE;
 GO
 
-CREATE PROCEDURE dbo.insere_csv_movimentacao_livros_stage
+CREATE OR ALTER PROCEDURE dbo.insere_csv_movimentacao_livros_stage
 AS
 BEGIN
 

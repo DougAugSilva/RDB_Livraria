@@ -1,7 +1,7 @@
 USE STAGE;
 GO
 
-CREATE PROCEDURE dbo.insere_tipos_de_erros_stage
+CREATE OR ALTER PROCEDURE dbo.insere_tipos_de_erros_stage
 AS
 BEGIN
 	BULK INSERT TIPO_DE_ERRO

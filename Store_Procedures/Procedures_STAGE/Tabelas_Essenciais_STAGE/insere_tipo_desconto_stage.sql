@@ -1,7 +1,7 @@
 USE STAGE;
 GO
 
-CREATE PROCEDURE dbo.insere_tipo_desconto_stage
+CREATE OR ALTER PROCEDURE dbo.insere_tipo_desconto_stage
 AS
 BEGIN
 	BULK INSERT TIPO_DESCONTO

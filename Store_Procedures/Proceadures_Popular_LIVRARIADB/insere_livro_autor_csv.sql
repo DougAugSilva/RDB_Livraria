@@ -1,7 +1,7 @@
 USE LIVRARIADB;
 GO
 
-CREATE PROCEDURE dbo.insere_livroautor_livrariadb
+CREATE OR ALTER PROCEDURE dbo.insere_livroautor_livrariadb
 AS
 BEGIN
     MERGE LIVRARIADB.dbo.LIVRO_AUTOR Destino

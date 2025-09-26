@@ -64,7 +64,8 @@ GO
 EXEC dbo.insere_nota_fiscal_livrariadb;
 GO
 EXEC dbo.insere_livroautor_livrariadb;
-
+GO
+EXEC dbo.insere_prog_recebimento;
 -- =======================================================
 -- Verifica valores inseridos nas tabelas essenciais STAGE
 -- =======================================================

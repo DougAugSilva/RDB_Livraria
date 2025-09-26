@@ -1,7 +1,7 @@
 USE LIVRARIADB;
 GO
 
-CREATE PROCEDURE dbo.insere_item_venda_livrariadb
+CREATE OR ALTER PROCEDURE dbo.insere_item_venda_livrariadb
 AS
 BEGIN
 	MERGE LIVRARIADB.dbo.ITEM_VENDA Destino
