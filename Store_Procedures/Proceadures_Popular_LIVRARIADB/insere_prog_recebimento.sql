@@ -92,11 +92,3 @@ BEGIN
 	CLOSE db_cursor;
 	DEALLOCATE	db_cursor;
 END
-
-/*
-    Preencher a tabela  PROG_RECEBIMENTO com base na nota fiscal, agora a tabela pago é 0, 
-depois somente a coluna PAGO será alterada, com base em um csv que atualiza os itens pagos.
-    A proceadure de povoamento da tabela PROG_RECEBIMENTO deve conter um laço que insere o itens 
-confrome o numero de parcelas, por exemplo, uma nota em 3 pareclas deverá ter seu valor total
-dividido por 3 e inserido em 3 parcelas distinastas, com 3 datas de vencimento distintas.
-*/
