@@ -1,42 +1,60 @@
-Atualizações 20/09/2025
+Atualizações 27/09/2025
 
--- alterei tabela NOTA_FISCAL para conter coluna VALOR_NF (alterar no diagrama e no banco).
--- alterei a proceadure de inserlçao da nota fiscal, para o cálculo automático do valor da nota.
--- alterei tabela TIPO_PAGAMENTO para conter quanrtidade das parcelas refrente a cada tipo.
+-- Crirei tabela RECEBIMENTO no banco de dados STAGE.
+-- Realizei um BULK INSERT na tabela RECEBIMENTO, com base nos dados do csv "recebimento".
 ============================================================================
 Querys utilizadas 
 
--------------------------------------------------------
--- alteração da tabela nota fiscal para inserção dos vallores da venda
--- esta inserção multiplica a quantidade do item pelo valor do item.
+USE STAGE;
 
-ALTER TABLE LIVRARIADB.dbo.TIPO_PAGAMENTO
-ADD NUMERO_PARCELAS INT;
+CREATE TABLE RECEBIMENTO (
+    NUMERO_NOTA_FISCAL INT,
+    DATA_PARCELA DATE,
+    DATA_RECEBIMENTO DATE,
+    VALOR_PARCELA DECIMAL(10, 2),
+    VALOR_PAGO DECIMAL(10, 2)
+);
 
-UPDATE LIVRARIADB.dbo.TIPO_PAGAMENTO
-SET NUMERO_PARCELAS = 
-    CASE 
-        WHEN TIPO = 'A vista' THEN 1
-        WHEN TIPO = '30 dias' THEN 1
-        WHEN TIPO = '30/60 dias' THEN 2
-        WHEN TIPO = '30/60/90 dias' THEN 3
-        WHEN TIPO = 'Entrada/30 dias' THEN 2
-        WHEN TIPO = 'Entrada/30/60 dias' THEN 3
-        WHEN TIPO = 'Entrada/30/60/90 dias' THEN 4
-        ELSE 1 
-    END;
+SELECT * FROM RECEBIMENTO;
+
+select * from LIVRARIADB.dbo.PROG_RECEBIMENTO;
+
+BULK INSERT RECEBIMENTO
+FROM 'C:\Arquivos_banco_dados\recebimentos.csv'
+	WITH (
+			FIELDTERMINATOR = ',',
+			ROWTERMINATOR = '\n',
+			FIRSTROW = 2,
+			CODEPAGE = 65001
+			);
+
+ALTER TABLE RECEBIMENTO
+ADD NUMERO_PARCELA INT;
+
+EXEC sp_rename 'LIVRARIADB.dbo.TIPO_DESCONTO.`LIVRARIADB.dbo.TIPO_DESCONTO.STATUS`', 'STATUS', 'COLUMN'; --consertar
+
 =======================================================================
 Tarefas
-[1]
--- Alteraar código de criação dio banco de dados LIVRARIADB para comportar as novas mudanças feitas no
--- LIVRARIADB e as mudanças nas tabelas NOTA_FISCAL E TIPO_PAGAMENTO. [OK]
 
-[2]
--- Alterar diagrama (modelo teórico) do banco de dados depouis de mudar o código. [OK]
+[1]. Realisar insert na tabela HISTORICO_RECEBIMENTO todas as parcelas recebidas (independenete
+de estarem válidas ou não).
 
-[3]
- Preencher a tabela  PROG_RECEBIMENTO com base na nota fiscal, agora a tabela pago é 0, 
-depois somente a coluna PAGO será alterada, com base em um csv que atualiza os itens pagos.
- A proceadure de povoamento da tabela PROG_RECEBIMENTO deve conter um laço que insere o itens 
-confrome o numero de parcelas, por exemplo, uma nota em 3 pareclas deverá ter seu valor total
-dividido por 3 e inserido em 3 parcelas distinastas, com 3 datas de vencimento distintas. [OK]
+[2]. Inserir as parcelas divergentes nma tabela HISTORICO_DIVERGENTE.
+
+[3]. Realisar um upadate na tabela PROG_RECEBIMENTO das parecelas recebidas (independente de o valor pago estar 
+diferente do valor que deveria ser pago).
+
+-----------------------------------------------------------
+A tabela LIVRARIADB.dbo.TIPO_DESCONTO deve ser alterada do seguinte modelo
+
+1. Deve ser criado linhas para comporatr um tipo com o minimo de 0 dias e um com o minimo de 1 dia.
+2. Realiar uma alteração na coluna TIPO, de modo que deve conter apenas valores 0 ou 1, com 0 = Juros e 1 = Desconto.
+3. Alterar a coluna ESTATUS para se chamar STATUS.
+4. A tabela deve ter seus dados deletados, para conter as seguintes infromações:
+-- Pagou antecipado (entre 1 e 5 dias), dar de 1% a 2% de desconto,
+-- Pagou antecipado (entre 6 a 10 dias), dar de 2% a 5% de desconto,
+-- Pagou antecipado (maior que 10 dias), dar 8% de desconto,
+-- Pagou com 0 dias dar 0% de desconto,
+-- Pagou atrazado (entre 1 e 5 dias), dar de 1% a 2% de juros,
+-- Pagou atrazado (entre 6 a 10 dias), dar de 2% a 5% de juros,
+-- Pagou atrazado (maior que 10 dias), dar 8% de juros
