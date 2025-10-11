@@ -1,18 +1,18 @@
-MINIMO_DIA,MAXIMO_DIA,PERCENT_MIN,PERCENT_MAX,DESC_DESCONTO,TIPO
-1,5,0.01,0.02, Pago adiantado entre 1 e 5 dias,1
-5,10,0.02,0.05, Pago adiantado entre 5 e 10 dias,1
-10,10,0.08,0.08, Pago adiantado masi que 10 dias,1
-0,0,0,0, Pago na data,1
-1,5,0.01,0.02, Pago atrasado entre 1 e 5 dias,0
-5,10,0.02,0.05, Pago atrasado entre 5 e 10 dias,0
-10,10,0.08,0.08, Pago atrasado masi que 10 dias,0
-0,0,0.05,0.1,Desconto de Verão,1
-0,0,0.03,0.08,Desconto de Carnaval,1
-0,0,0.04,0.09,Desconto de Páscoa,1
-0,0,0.02,0.07,Desconto de Outono,1
-0,0,0.03,0.08,Desconto de Mãe,1
-0,0,0.04,0.09,Desconto de Namorados,1
-0,0,0.05,0.1,Desconto de Inverno,1
-0,0,0.02,0.07,Desconto de Pais,1
-0,0,0.03,0.08,Desconto da Primavera,1
-0,0,0.04,0.09,Desconto de Crianças,1
+MINIMO_DIA,MAXIMO_DIA,PERCENT_MIN,PERCENT_MAX,DESC_DESCONTO,TIPO,STATUS
+1,5,0.01,0.02, Pago adiantado entre 1 e 5 dias,1,1
+5,10,0.02,0.05, Pago adiantado entre 5 e 10 dias,1,1
+10,10,0.08,0.08, Pago adiantado masi que 10 dias,1,1
+0,0,0,0, Pago na data,1,1
+1,5,0.01,0.02, Pago atrasado entre 1 e 5 dias,0,1
+5,10,0.02,0.05, Pago atrasado entre 5 e 10 dias,0,1
+10,10,0.08,0.08, Pago atrasado masi que 10 dias,0,1
+0,0,0.05,0.1,Desconto de Verão,1,0
+0,0,0.03,0.08,Desconto de Carnaval,1,0
+0,0,0.04,0.09,Desconto de Páscoa,1,0
+0,0,0.02,0.07,Desconto de Outono,1,0
+0,0,0.03,0.08,Desconto de Mãe,1,0
+0,0,0.04,0.09,Desconto de Namorados,1,0
+0,0,0.05,0.1,Desconto de Inverno,1,0
+0,0,0.02,0.07,Desconto de Pais,1,0
+0,0,0.03,0.08,Desconto da Primavera,1,0
+0,0,0.04,0.09,Desconto de Crianças,1,0

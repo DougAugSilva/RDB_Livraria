@@ -1,60 +1,30 @@
-Atualizações 27/09/2025
+-- Atualizações 11/10/2025
+-----------------------------------------------------------------------------------------------------
+-- Mudanças Realizadas
 
--- Crirei tabela RECEBIMENTO no banco de dados STAGE.
--- Realizei um BULK INSERT na tabela RECEBIMENTO, com base nos dados do csv "recebimento".
-============================================================================
-Querys utilizadas 
+- 1. Alterada a tabela LIVRARIADB.dbo.TIPO_DESCONTO e STAGE.dbo.TIPO_DESCONTO.
 
-USE STAGE;
+- 2. Alterada tabela LIVRARIADB.dbo.HISTORICO_DIVERGENTE para ficar similar a tabela
+	LIVRARIADB.dbo.HISTORICO_RECEBIMENTO.
 
-CREATE TABLE RECEBIMENTO (
-    NUMERO_NOTA_FISCAL INT,
-    DATA_PARCELA DATE,
-    DATA_RECEBIMENTO DATE,
-    VALOR_PARCELA DECIMAL(10, 2),
-    VALOR_PAGO DECIMAL(10, 2)
-);
+- 3. Criada proceadure dbo.insere_recebimento_stage para iserção do csv historico_recebimento
+	na tabela STAGE.dbo.RECEBIMENTO.
+-----------------------------------------------------------------------------------------------------
+-- Tarefas
 
-SELECT * FROM RECEBIMENTO;
+- 1. Criar proceadure de inserção dos dados na tabela LIVRARIADB.dbo.HISTORICO_RECEBIMENTO
+	com base no csv hitorico_recebimento.csv (que está carregado na tabela STAGE.dbo.RECEBIMENTO), 
+	e com os dados nas outras tabelas.
+	A inserção deve ser de todos os valores, independente se os valores dos descontos estão
+	bem, aplicados ou não.
 
-select * from LIVRARIADB.dbo.PROG_RECEBIMENTO;
+- 2. Criar procedure de inserção na tabela LIVRARIADB.dbo.HISTORICO_DIVERGENTE com base em
+	calculos com os valores na tabela historico divergente e com as inforções dos descontos.
 
-BULK INSERT RECEBIMENTO
-FROM 'C:\Arquivos_banco_dados\recebimentos.csv'
-	WITH (
-			FIELDTERMINATOR = ',',
-			ROWTERMINATOR = '\n',
-			FIRSTROW = 2,
-			CODEPAGE = 65001
-			);
+- 3. Alterar na criação do banco e no modelo físico as mudanças feitas nas tabelas.
+-----------------------------------------------------------------------------------------------------
+-- Observações
 
-ALTER TABLE RECEBIMENTO
-ADD NUMERO_PARCELA INT;
+- OBS1. A coluna STATUS da tabela TIPO_DESCONTO diz se o desconto está ativo,  isto é, 
+	pode ser aplicado naquela data.
 
-EXEC sp_rename 'LIVRARIADB.dbo.TIPO_DESCONTO.`LIVRARIADB.dbo.TIPO_DESCONTO.STATUS`', 'STATUS', 'COLUMN'; --consertar
-
-=======================================================================
-Tarefas
-
-[1]. Realisar insert na tabela HISTORICO_RECEBIMENTO todas as parcelas recebidas (independenete
-de estarem válidas ou não).
-
-[2]. Inserir as parcelas divergentes na tabela HISTORICO_DIVERGENTE.
-
-[3]. Realisar um upadate na tabela PROG_RECEBIMENTO das parecelas recebidas (independente de o valor pago estar 
-diferente do valor que deveria ser pago).
-
------------------------------------------------------------
-A tabela LIVRARIADB.dbo.TIPO_DESCONTO deve ser alterada do seguinte modelo
-
-1. Deve ser criado linhas para comporatr um tipo com o minimo de 0 dias e um com o minimo de 1 dia.
-2. Realiar uma alteração na coluna TIPO, de modo que deve conter apenas valores 0 ou 1, com 0 = Juros e 1 = Desconto.
-3. Alterar a coluna ESTATUS para se chamar STATUS.
-4. A tabela deve ter seus dados deletados, para conter as seguintes infromações:
--- Pagou antecipado (entre 1 e 5 dias), dar de 1% a 2% de desconto,
--- Pagou antecipado (entre 6 a 10 dias), dar de 2% a 5% de desconto,
--- Pagou antecipado (maior que 10 dias), dar 8% de desconto,
--- Pagou com 0 dias dar 0% de desconto,
--- Pagou atrazado (entre 1 e 5 dias), dar de 1% a 2% de juros,
--- Pagou atrazado (entre 6 a 10 dias), dar de 2% a 5% de juros,
--- Pagou atrazado (maior que 10 dias), dar 8% de juros
