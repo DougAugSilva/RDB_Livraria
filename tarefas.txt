@@ -39,7 +39,7 @@ Tarefas
 [1]. Realisar insert na tabela HISTORICO_RECEBIMENTO todas as parcelas recebidas (independenete
 de estarem válidas ou não).
 
-[2]. Inserir as parcelas divergentes nma tabela HISTORICO_DIVERGENTE.
+[2]. Inserir as parcelas divergentes na tabela HISTORICO_DIVERGENTE.
 
 [3]. Realisar um upadate na tabela PROG_RECEBIMENTO das parecelas recebidas (independente de o valor pago estar 
 diferente do valor que deveria ser pago).
