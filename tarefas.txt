@@ -16,10 +16,10 @@
 	com base no csv hitorico_recebimento.csv (que está carregado na tabela STAGE.dbo.RECEBIMENTO), 
 	e com os dados nas outras tabelas.
 	A inserção deve ser de todos os valores, independente se os valores dos descontos estão
-	bem, aplicados ou não.
+	bem, aplicados ou não. [OK]
 
 - 2. Criar procedure de inserção na tabela LIVRARIADB.dbo.HISTORICO_DIVERGENTE com base em
-	calculos com os valores na tabela historico divergente e com as inforções dos descontos.
+	calculos com os valores na tabela historico divergente e com as inforções dos descontos. [OK]
 
 - 3. Alterar na criação do banco e no modelo físico as mudanças feitas nas tabelas.
 -----------------------------------------------------------------------------------------------------
@@ -27,4 +27,3 @@
 
 - OBS1. A coluna STATUS da tabela TIPO_DESCONTO diz se o desconto está ativo,  isto é, 
 	pode ser aplicado naquela data.
-
