@@ -1,7 +1,7 @@
 USE STAGE
 GO
 
-CREATE PROCEDURE dbo.carregar_validacao
+CREATE OR ALTER PROCEDURE dbo.carregar_validacao
 AS
 BEGIN
 
@@ -15,7 +15,4 @@ BEGIN
     WHERE R.NUMERO_NOTA_FISCAL_REJEITADOS IS NULL
     AND R.DATA_PROCESSAMENTO_REJEITADOS IS NULL
 END
-
-EXEC dbo.carregar_validacao;
-
 -- OK

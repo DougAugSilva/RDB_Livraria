@@ -1,7 +1,7 @@
 USE LIVRARIADB;
 GO
 
-CREATE PROCEDURE dbo.insere_tipo_pagamento_livrariadb
+CREATE OR ALTER PROCEDURE dbo.insere_tipo_pagamento_livrariadb
 AS
 BEGIN
 	DECLARE db_cursor CURSOR FOR

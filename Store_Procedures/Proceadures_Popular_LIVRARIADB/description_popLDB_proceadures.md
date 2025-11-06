@@ -10,10 +10,10 @@ As procedures possuem uma ordem de exewcução específica, dados que algumas ut
 - `EXEC dbo.carregar_validacao; ->`
 - `EXEC dbo.insere_cliente_livrariadb; ->`
 - `EXEC dbo.insere_endereco_livrariadb; ->`
-- `EXEC dbo.insere_nota_fiscal; ->`
+- `EXEC dbo.insere_item_venda_livrariadb; ->`
+- `EXEC dbo.insere_nota_fiscal_livrariadb; ->`
 - `EXEC dbo.insere_livroautor_livrariadb; ->`
-
-
+- `EXEC dbo.insere_prog_recebimento`
 
 ## Descricao das Procedures
 
@@ -36,6 +36,10 @@ Os dados passam por quatro processos de tratamento dentro da procedure:
 
 - `dbo.insere_endereco_livrariadb`: Insere ou atualiza as informações dos endereços dos clientes, utilizando os valores da tabela STAGE.dbo.MOVIMENTACAO_LIVROS_TRATADOS para inserção na LIVRARIADB.dbo.ENDERECOS_CLIENTES. 
 
+- `dbo.insere_item_venda_livrariadb`: Realiza a inserção dos dados na tabela LIVRARIADB.dbo.ITEM_VENDA, que faz ligação entre a tabela LIVROS com a tabela NOTAS_FISCAIS.
+
 - `dbo.insere_nota_fiscal`: Insere dados das notas fiscais na tabela LIVRARIADB.dbo.NOTAS_FISCAIS.
 
 - `dbo.insere_livroautor_livrariadb`: Insere os id's dos livros e autores, presentas nas tabelas LIVRARIADB.dbo.LIVRO e LIVRARIADB.dbo.AUTOR, criando assim uma tabela intermediaria que facilita Joins e consultas posteriores.
+
+- `dbo.insere_prog_recebimento`: Insere os históricos de parcelas recebidas pagas e ainda não pagas, calculando a data de vencimento e o valor de cada parcela.

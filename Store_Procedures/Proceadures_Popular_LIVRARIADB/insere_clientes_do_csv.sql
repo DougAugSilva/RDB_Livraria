@@ -1,7 +1,7 @@
 USE LIVRARIADB;
 GO
 
-CREATE PROCEDURE dbo.insere_cliente_livrariadb
+CREATE OR ALTER PROCEDURE dbo.insere_cliente_livrariadb
 AS
 BEGIN
 	MERGE LIVRARIADB.dbo.CLIENTE Destino
@@ -32,7 +32,4 @@ BEGIN
 			Origem.EMAIL_CLIENTE_TRATADOS
 		);
 END
-
-EXEC dbo.insere_cliente_livrariadb;
-
 -- OK

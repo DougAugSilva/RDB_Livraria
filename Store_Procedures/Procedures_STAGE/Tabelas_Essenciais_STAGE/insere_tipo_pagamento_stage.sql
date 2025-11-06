@@ -1,7 +1,7 @@
 USE STAGE;
 GO
 
-CREATE PROCEDURE dbo.insere_tipo_pagamento_stage
+CREATE OR ALTER PROCEDURE dbo.insere_tipo_pagamento_stage
 AS
 BEGIN
 	BULK INSERT TIPO_PAGAMENTO

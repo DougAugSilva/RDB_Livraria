@@ -1,7 +1,7 @@
 USE LIVRARIADB;
 GO
 
-CREATE PROCEDURE dbo.insere_autor_livrariadb
+CREATE OR ALTER PROCEDURE dbo.insere_autor_livrariadb
 AS
 BEGIN
 	DECLARE db_cursor CURSOR FOR

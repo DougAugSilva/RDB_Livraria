@@ -1,7 +1,7 @@
 USE STAGE;
 GO
 
-CREATE PROCEDURE dbo.insere_atendente_stage
+CREATE OR ALTER PROCEDURE dbo.insere_atendente_stage
 AS
 BEGIN
 	BULK INSERT ATENDENTE

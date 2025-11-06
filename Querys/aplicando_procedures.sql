@@ -59,10 +59,13 @@ EXEC dbo.insere_cliente_livrariadb;
 GO
 EXEC dbo.insere_endereco_livrariadb;
 GO
-EXEC dbo.insere_nota_fiscal;
+EXEC dbo.insere_item_venda_livrariadb;
+GO
+EXEC dbo.insere_nota_fiscal_livrariadb;
 GO
 EXEC dbo.insere_livroautor_livrariadb;
-
+GO
+EXEC dbo.insere_prog_recebimento;
 -- =======================================================
 -- Verifica valores inseridos nas tabelas essenciais STAGE
 -- =======================================================
