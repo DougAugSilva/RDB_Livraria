@@ -5,7 +5,7 @@ CREATE OR ALTER PROCEDURE dbo.insere_tipo_desconto_stage
 AS
 BEGIN
 	BULK INSERT TIPO_DESCONTO
-		FROM 'C:\Arquivos_banco_dados\tipo_desconto.csv' 
+		FROM 'C:\Arquivos_banco_dados\tipo_desconto_novo.csv' 
 		WITH(
 			FIELDTERMINATOR = ',',
 			ROWTERMINATOR = '\n',

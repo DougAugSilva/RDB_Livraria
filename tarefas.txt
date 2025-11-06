@@ -1,42 +1,41 @@
-Atualizações 20/09/2025
+-- Atualizações 11/10/2025
+-----------------------------------------------------------------------------------------------------
+-- Mudanças Realizadas
 
--- alterei tabela NOTA_FISCAL para conter coluna VALOR_NF (alterar no diagrama e no banco).
--- alterei a proceadure de inserlçao da nota fiscal, para o cálculo automático do valor da nota.
--- alterei tabela TIPO_PAGAMENTO para conter quanrtidade das parcelas refrente a cada tipo.
-============================================================================
-Querys utilizadas 
+- 1. Alterada a tabela LIVRARIADB.dbo.TIPO_DESCONTO e STAGE.dbo.TIPO_DESCONTO.
 
--------------------------------------------------------
--- alteração da tabela nota fiscal para inserção dos vallores da venda
--- esta inserção multiplica a quantidade do item pelo valor do item.
+- 2. Alterada tabela LIVRARIADB.dbo.HISTORICO_DIVERGENTE para ficar similar a tabela
+	LIVRARIADB.dbo.HISTORICO_RECEBIMENTO.
 
-ALTER TABLE LIVRARIADB.dbo.TIPO_PAGAMENTO
-ADD NUMERO_PARCELAS INT;
+- 3. Criada proceadure dbo.insere_recebimento_stage para iserção do csv historico_recebimento
+	na tabela STAGE.dbo.RECEBIMENTO.
+-----------------------------------------------------------------------------------------------------
+-- Tarefas
 
-UPDATE LIVRARIADB.dbo.TIPO_PAGAMENTO
-SET NUMERO_PARCELAS = 
-    CASE 
-        WHEN TIPO = 'A vista' THEN 1
-        WHEN TIPO = '30 dias' THEN 1
-        WHEN TIPO = '30/60 dias' THEN 2
-        WHEN TIPO = '30/60/90 dias' THEN 3
-        WHEN TIPO = 'Entrada/30 dias' THEN 2
-        WHEN TIPO = 'Entrada/30/60 dias' THEN 3
-        WHEN TIPO = 'Entrada/30/60/90 dias' THEN 4
-        ELSE 1 
-    END;
-=======================================================================
-Tarefas
-[1]
--- Alteraar código de criação dio banco de dados LIVRARIADB para comportar as novas mudanças feitas no
--- LIVRARIADB e as mudanças nas tabelas NOTA_FISCAL E TIPO_PAGAMENTO. [OK]
+- 1. Criar proceadure de inserção dos dados na tabela LIVRARIADB.dbo.HISTORICO_RECEBIMENTO
+	com base no csv hitorico_recebimento.csv (que está carregado na tabela STAGE.dbo.RECEBIMENTO), 
+	e com os dados nas outras tabelas.
+	A inserção deve ser de todos os valores, independente se os valores dos descontos estão
+	bem, aplicados ou não. [OK]
 
-[2]
--- Alterar diagrama (modelo teórico) do banco de dados depouis de mudar o código. [OK]
+- 2. Criar procedure de inserção na tabela LIVRARIADB.dbo.HISTORICO_DIVERGENTE com base em
+	calculos com os valores na tabela historico divergente e com as inforções dos descontos. [OK]
 
-[3]
- Preencher a tabela  PROG_RECEBIMENTO com base na nota fiscal, agora a tabela pago é 0, 
-depois somente a coluna PAGO será alterada, com base em um csv que atualiza os itens pagos.
- A proceadure de povoamento da tabela PROG_RECEBIMENTO deve conter um laço que insere o itens 
-confrome o numero de parcelas, por exemplo, uma nota em 3 pareclas deverá ter seu valor total
-dividido por 3 e inserido em 3 parcelas distinastas, com 3 datas de vencimento distintas. [OK]
+- 3. Alterar na criação do banco e no modelo físico as mudanças feitas nas tabelas.
+-----------------------------------------------------------------------------------------------------
+-- Observações
+
+- OBS1. A coluna STATUS da tabela TIPO_DESCONTO diz se o desconto está ativo,  isto é, 
+	pode ser aplicado naquela data.
+
+=================================================================================
+Reunião 18/10/2025
+
+-- corrigir proceadure de inserção na historico recebimneto (verificar numero da parcela) [OK]
+-- corrigir bulk insert para pegar do csv recebimento [OK]
+-- atualizar status como pago conforme recebimento [OK]
+-- mover os arquivos csv's processados para a pasta processados
+=================================================================================
+Reunião 25/10/2025
+
+-- consertar Job das proceadures [OK]

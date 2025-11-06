@@ -42,7 +42,7 @@ BEGIN
 		FROM LIVRARIADB.dbo.PROG_RECEBIMENTO
 		WHERE ID_NF = @id_nf AND NUM_PARCELA = @num_parcela
 		)BEGIN
-			IF (@num_parcela = 1) -- caso tenha apenas 1 parcela, insere normalmente
+			IF (@tipo_pag LIKE '%vista') -- caso tenha apenas 1 parcela, insere normalmente
 			BEGIN
 				INSERT INTO LIVRARIADB.dbo.PROG_RECEBIMENTO(
 				ID_NF, NUM_PARCELA, VAL_PARCELA, DATA_VENCIMENTO, PAGO
