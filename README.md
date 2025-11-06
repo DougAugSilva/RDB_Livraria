@@ -1,7 +1,7 @@
 # RDB Livraria
 Banco de dados relacional (RDB) de uma livraria em SQL Server
 
-![Modelo_Conceitual](https://github.com/DougAugSilva/RDB_Livraria/blob/main/modelo_conceitual/RDB_Livrariamodelo_conceitual%20Diagrama%20Biblioteca%20RDB%20(modelo%203).png)
+![Modelo_Conceitual](https://github.com/DougAugSilva/RDB_Livraria/blob/main/modelo_conceitual/Diagrama%20Biblioteca%20RDB.drawio.png)
 > Banco de dados *LIVRARIADB*
 
 
