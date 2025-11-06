@@ -27,3 +27,15 @@
 
 - OBS1. A coluna STATUS da tabela TIPO_DESCONTO diz se o desconto está ativo,  isto é, 
 	pode ser aplicado naquela data.
+
+=================================================================================
+Reunião 18/10/2025
+
+-- corrigir proceadure de inserção na historico recebimneto (verificar numero da parcela) [OK]
+-- corrigir bulk insert para pegar do csv recebimento [OK]
+-- atualizar status como pago conforme recebimento [OK]
+-- mover os arquivos csv's processados para a pasta processados
+=================================================================================
+Reunião 25/10/2025
+
+-- consertar Job das proceadures [OK]

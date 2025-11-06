@@ -1,4 +1,4 @@
--- 2 DEPOIS DE TODAS FEITAS ANTES DE 11/10/2025
+-- 2 DEPOIS DE TODAS FEITAS DEPOIS DE 11/10/2025
 USE LIVRARIADB;
 GO
 CREATE OR ALTER PROCEDURE dbo.insere_historico_divergente
@@ -69,7 +69,7 @@ BEGIN
                     --verifica se a porcentagem do  desconto condiz com os dias
                     DATEDIFF(DAY, PR.DATA_VENCIMENTO, HR.DATA_RECEBIMENTO) < TD.MINIMO_DIA
                     OR
-                    DATEDIFF(DAY, PR.DATA_VENCIMENTO, HR.DATA_RECEBIMENTO) >= TD.MAXIMO_DIA
+                    DATEDIFF(DAY, PR.DATA_VENCIMENTO, HR.DATA_RECEBIMENTO) > TD.MAXIMO_DIA
                 THEN 'Valor da multa indevido'
 
                 -- Caso aplique um desconto de valor indevido
@@ -82,7 +82,7 @@ BEGIN
                     --verifica se a porcentagem do  desconto condiz com os dias
                     DATEDIFF(DAY, PR.DATA_VENCIMENTO, HR.DATA_RECEBIMENTO) < TD.MINIMO_DIA
                     OR
-                    DATEDIFF(DAY, PR.DATA_VENCIMENTO, HR.DATA_RECEBIMENTO) >= TD.MAXIMO_DIA
+                    DATEDIFF(DAY, PR.DATA_VENCIMENTO, HR.DATA_RECEBIMENTO) > TD.MAXIMO_DIA
                 THEN 'Valor do desconto indevido'
             END AS MOTIVO
         FROM 

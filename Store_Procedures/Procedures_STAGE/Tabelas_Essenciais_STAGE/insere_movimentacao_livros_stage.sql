@@ -6,7 +6,7 @@ AS
 BEGIN
 
 	BULK INSERT MOVIMENTACAO_LIVROS 
-	FROM 'C:\Arquivos_banco_dados\carregar.csv' 
+	FROM 'C:\Arquivos_banco_dados\input\movimentacao_livros.csv' 
 	WITH(
 		FIELDTERMINATOR = ',',
 		ROWTERMINATOR = '\n',

@@ -1,9 +1,2 @@
 nome_cliente,numero_endereço,complemento,cep,tipo_endereço,email_cliente,telefone_cliente,cpf,numero_nota_fiscal,quantidade,valor_item,valor_total,condição pagamento,titulo,autor,id_loja,id_atendente,data_venda,data_processamento
-João Silva,123,apto 101,01311000,RES,joao.silva@gmail.com,11987654321,12345678901,1001,1,45.90,91.80,Entrada - 30 dias,Dom Casmurro,Machado de Assis,5,12,2023-05-15,2025-05-15
-João Silva,123,apto 101,01311000,res,joao.silva@gmail.com,11987654321,12345678901,1001,1,45.90,91.80,Entrada - 30 dias,Memórias Póstumas de Brás Cubas,Machado de Assis,5,12,2025-05-15,2025-05-15
-Maria Oliveira,456,casa 2,20040000,COM,maria.oliveira@hotmail.com,21999887766,23456789012,1002,2,32.50,65.00,A vista,O Cortiço,Aluísio Azevedo,3,8,2025-05-16,2025-05-16
-Carlos Pereira,789,nulo,30140010,COB,carlos.pereira@yahoo.com,31988776655,34567890123,1003,1,78.00,78.00,30 dias,Olho por Olho,Jenny Han - Siobhan Vivian,2,5,2025-05-17,2025-05-18
-Ana Santos,1011,bloco B apto 402,80010000,res,ana.santos@outlook.com,41977665544,45678901234,1004,3,15.00,45.00,30 60 90 dias,O Guarani,José de Alencar,1,3,2025-05-18,2025-05-19
-Pedro Almeida,1213,nulo,40010000,com,pedro.almeida@gmail.com,71966554433,56789012345,1005,1,29.90,29.90,a vista,A Moreninha,Joaquim Manuel de Macedo,4,10,2025-05-18,2025-05-19
-Pedro Almeida,1213,nulo,40010000,COM,pedro.almeida@gmail.com,71966554433,56789012345,1005,1,29.90,29.90,a vista,A Moreninha,Joaquim Manuel de Macedo,4,10,2025-05-18,2025-05-19
-Pedro Almeida,1213,nulo,40010000,com,pedro.almeida@gmail.com,71966554433,56789012345,1005,1,29.90,29.90,a vista,Olho por Olho,Jenny Han - Siobhan Vivian,1,4,2025-05-10,2025-05-18
+Ana Santos,1011,bloco B apto 402,80010000,res,ana.santos@outlook.com,41977665544,45678901234,1005,1,15.00,15.00,30 dias,O Guarani,José de Alencar,1,3,2025-07-23,2025-07-25

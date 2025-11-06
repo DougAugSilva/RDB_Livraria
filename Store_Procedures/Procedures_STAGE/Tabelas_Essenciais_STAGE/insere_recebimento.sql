@@ -5,7 +5,7 @@ CREATE OR ALTER PROCEDURE dbo.insere_recebimento_stage
 AS
 BEGIN
 	BULK INSERT RECEBIMENTO
-	FROM 'C:\Arquivos_banco_dados\historico_recebimento.csv'
+	FROM 'C:\Arquivos_banco_dados\input\recebimentos.csv'
 		WITH (
 				FIELDTERMINATOR = ',',
 				ROWTERMINATOR = '\n',
